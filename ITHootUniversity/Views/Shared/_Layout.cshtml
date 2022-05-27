@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University</title>
+    <link rel="stylesheet" type="text/css" href="css/dropstyles.css">
+    <link rel="stylesheet" type="text/css" href="css/dizel.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="header_small">
+                <div class="header_menu">
+                    @{
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                             <a asp-area="" asp-controller="Cabinet" asp-action="Index"><div class="menu_button"><p class="fs_1vw">@(User.Identity.Name)</p></div></a>
+                             <a asp-area="" asp-controller="Home" asp-action="Logout"><div class="menu_button"><p class="fs_1vw">LOGOUT</p></div></a>
+                        }
+                        else
+                        {
+                             <a asp-area="" asp-controller="Home" asp-action="Index"><div class="menu_button"><p class="fs_1vw">SIGN IN</p></div></a>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="header_big">
+                <p class="fs_2_5vw">UNIVERSITY</p>
+            </div>
+        </div>
+        <div class="mainbody">
+            @RenderBody()
+        </div>
+        <div class="footer">
+            <div class="footer_name">
+                <p class="fs_1vw">2022 ITHOOT DOKERcom</p>
+            </div>
+        </div>
+    </div>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

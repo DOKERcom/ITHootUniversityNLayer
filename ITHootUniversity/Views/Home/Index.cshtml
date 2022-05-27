@@ -1,0 +1,37 @@
+﻿@model SignInUserViewModel
+@{
+    @if(User.Identity.IsAuthenticated)
+    {
+        <div class="form_block">
+            <div class="form">
+                <div class="name_block">
+                    <label class="fs_1_5vw">Hello, @(User.Identity.Name)! You already in account!</label>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+    <div class="form_block">
+        <div class="form">
+            <div class="name_block">
+                <label class="fs_1_5vw">SIGN IN FORM</label>
+            </div>
+            <div class="input_block">
+                <label for="Login">Login:</label>
+                <input asp-for="UserName" id="Login" maxlength="25" type="text" name="Login">
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div class="input_block">
+                <label for="Password">Password:</label>
+                <input asp-for="Password" id="Password" maxlength="25" type="text" name="Password">
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="submit_button">
+                <input type="submit" onclick="AuthFunc(document.getElementById('Login').value, document.getElementById('Password').value)" value="SIGN IN">
+            </div>
+        </div>
+    </div>
+    }
+}
+<script type="text/javascript" src="js/homeindex.js"></script>
