@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Repositories.Interfaces;
-using DataAccessLayer.DbContexts;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +33,10 @@ namespace DataAccessLayer.Repositories.Implementations
             return await userManager.UpdateAsync(user);
         }
 
-        public async Task<IdentityResult> CreateUser(UserModel user)
+        public async Task<IdentityResult> CreateUser(UserModel user, string password)
         {
-            return await userManager.CreateAsync(user);
+            var result = await userManager.CreateAsync(user, password); //TODO не даёт ответ когда все норм и не создает пользователя
+            return result;
         }
 
         public async Task<IdentityResult> DeleteUser(UserModel user)

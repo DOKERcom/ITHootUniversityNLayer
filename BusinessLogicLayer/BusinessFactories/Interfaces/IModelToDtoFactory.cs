@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.ModelToDtoHandlers.Interfaces
+namespace BusinessLogicLayer.BusinessFactories.Interfaces
 {
-    public interface ITransformatorModelToDto
+    public interface IModelToDtoFactory
     {
         public DtoUserModel TransformUserModelToDtoUserModel(UserModel user);
 

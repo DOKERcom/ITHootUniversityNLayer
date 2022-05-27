@@ -8,34 +8,34 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using BusinessLogicLayer.Services.Interfaces;
-using BusinessLogicLayer.ModelToDtoHandlers.Interfaces;
+using BusinessLogicLayer.BusinessFactories.Interfaces;
 
 namespace BusinessLogicLayer.Services.Implementations
 {
     public class UsersService : IUsersService
     {
         private readonly IUsersRepository usersRepository;
-        private readonly ITransformatorModelToDto TransformatorModelToDto;
-        public UsersService(IUsersRepository usersRepository, ITransformatorModelToDto TransformatorModelToDto)
+        private readonly IModelToDtoFactory modelToDtoFactory;
+        public UsersService(IUsersRepository usersRepository, IModelToDtoFactory modelToDtoFactory)
         {
             this.usersRepository = usersRepository;
-            this.TransformatorModelToDto = TransformatorModelToDto;
+            this.modelToDtoFactory = modelToDtoFactory;
         }
 
 
         public async Task<DtoUserModel> GetUserById(string id)
         {
-            return TransformatorModelToDto.TransformUserModelToDtoUserModel(await usersRepository.GetUserById(id));
+            return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetUserById(id));
         }
 
         public async Task<DtoUserModel> GetUserByLogin(string userName)
         {
-            return TransformatorModelToDto.TransformUserModelToDtoUserModel(await usersRepository.GetUserByUserName(userName));
+            return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetUserByUserName(userName));
         }
 
         public async Task<List<DtoUserModel>> GetAllUsers()
         {
-            return TransformatorModelToDto.TransformUserModelToDtoUserModel(await usersRepository.GetAllUsers());
+            return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetAllUsers());
         }
 
         public async Task<IdentityResult> UpdateUser(UserModel user)
@@ -43,9 +43,9 @@ namespace BusinessLogicLayer.Services.Implementations
             return await usersRepository.UpdateUser(user);
         }
 
-        public async Task<IdentityResult> CreateUser(UserModel user)
+        public async Task<IdentityResult> CreateUser(UserModel user, string password)
         {
-            return await usersRepository.CreateUser(user);
+            return await usersRepository.CreateUser(user, password);
         }
 
         public async Task<IdentityResult> DeleteUser(UserModel user)

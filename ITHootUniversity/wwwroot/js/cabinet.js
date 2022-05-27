@@ -1,8 +1,8 @@
-﻿function CreateOrUpdateUser(login, password, username, usertype) {
+﻿function CreateOrUpdateUser(login, password, role) {
     if (login.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/CreateOrUpdateUser";
-        const params = "Id=" + "&Login=" + login + "&Password=" + password + "&UserName=" + username + "&UserType=" + usertype + "&SessionKey=";
+        const params = "UserName=" + login + "&Password=" + password + "&Role=" + role;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {

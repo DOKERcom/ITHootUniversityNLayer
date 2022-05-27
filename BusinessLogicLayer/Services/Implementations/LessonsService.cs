@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.DtoModels;
-using BusinessLogicLayer.ModelToDtoHandlers.Interfaces;
+using BusinessLogicLayer.BusinessFactories.Interfaces;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Interfaces;
@@ -14,21 +14,21 @@ namespace BusinessLogicLayer.Services.Implementations
     public class LessonsService : ILessonsService
     {
         private readonly ILessonsRepository lessonsRepository;
-        private readonly ITransformatorModelToDto TransformatorModelToDto;
-        public LessonsService(ILessonsRepository lessonsRepository, ITransformatorModelToDto TransformatorModelToDto)
+        private readonly IModelToDtoFactory modelToDtoFactory;
+        public LessonsService(ILessonsRepository lessonsRepository, IModelToDtoFactory modelToDtoFactory)
         {
             this.lessonsRepository = lessonsRepository;
-            this.TransformatorModelToDto = TransformatorModelToDto;
+            this.modelToDtoFactory = modelToDtoFactory;
         }
 
         public async Task<List<DtoLessonModel>> GetAllLessons()
         {
-            return TransformatorModelToDto.TransformLessonModelToDtoLessonModel(await lessonsRepository.GetAllLessons());
+            return modelToDtoFactory.TransformLessonModelToDtoLessonModel(await lessonsRepository.GetAllLessons());
         }
 
         public async Task<DtoLessonModel> GetLessonByLessonName(string lessonName)
         {
-            return TransformatorModelToDto.TransformLessonModelToDtoLessonModel(await lessonsRepository.GetLessonByLessonName(lessonName));
+            return modelToDtoFactory.TransformLessonModelToDtoLessonModel(await lessonsRepository.GetLessonByLessonName(lessonName));
         }
 
         public async Task<bool> CreateLesson(LessonModel lesson)

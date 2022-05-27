@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.DtoModels;
-using BusinessLogicLayer.ModelToDtoHandlers.Interfaces;
+using BusinessLogicLayer.BusinessFactories.Interfaces;
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.ModelToDtoHandlers.Implementations
+namespace BusinessLogicLayer.BusinessFactories.Implementations
 {
-    public class TransformatorModelToDto : ITransformatorModelToDto
+    public class ModelToDtoFactory : IModelToDtoFactory
     {
         //----------------LessonModel -> DtoLessonModel-----------------------
         public List<DtoLessonModel> TransformLessonModelToDtoLessonModel(IEnumerable<LessonModel> lessons)
@@ -38,6 +38,9 @@ namespace BusinessLogicLayer.ModelToDtoHandlers.Implementations
         //----------------UserModel -> DtoUserModel-----------------------
         public DtoUserModel TransformUserModelToDtoUserModel(UserModel user)
         {
+            if(user == null)
+                return null;
+
             DtoUserModel dtoUser = new DtoUserModel
             {
                 UserName = user.UserName

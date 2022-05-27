@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repositories.Interfaces
 
         public Task<IdentityResult> UpdateUser(UserModel user);
 
-        public Task<IdentityResult> CreateUser(UserModel user);
+        public Task<IdentityResult> CreateUser(UserModel user, string password);
 
         public Task<IdentityResult> DeleteUser(UserModel user);
     }

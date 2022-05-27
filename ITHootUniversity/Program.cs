@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BusinessLogicLayer.Services.Interfaces;
 using BusinessLogicLayer.Services.Implementations;
-using BusinessLogicLayer.ModelToDtoHandlers.Implementations;
-using BusinessLogicLayer.ModelToDtoHandlers.Interfaces;
+using BusinessLogicLayer.BusinessFactories.Implementations;
+using BusinessLogicLayer.BusinessFactories.Interfaces;
 using ITHootUniversity.Services.Interfaces;
 using ITHootUniversity.Services.Implementations;
+using ITHootUniversity.WebAppFactories.Interfaces;
+using ITHootUniversity.WebAppFactories.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +34,13 @@ builder.Services.AddScoped<IUsersInLessonsRepository, UsersInLessonsRepository>(
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ILessonsService, LessonsService>();
 builder.Services.AddTransient<IUsersInLessonsService, UsersInLessonsService>();
+builder.Services.AddTransient<ICreateOrUpdateUserService, CreateOrUpdateUserService>();
 
-builder.Services.AddTransient<ITransformatorModelToDto, TransformatorModelToDto>();
+builder.Services.AddTransient<IModelToDtoFactory, ModelToDtoFactory>();
+builder.Services.AddTransient<IDtoToModelFactory, DtoToModelFactory>();
+builder.Services.AddTransient<IViewModelToDtoFactory, ViewModelToDtoFactory>();
+
+
 builder.Services.AddTransient<IAuthorizationUserService, AuthorizationUserService>();
 builder.Services.AddTransient<IResultBuilderService, ResultBuilderService>();
 
