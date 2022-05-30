@@ -13,7 +13,9 @@ namespace BusinessLogicLayer.Services.Implementations
     public class RolesService : IRolesService
     {
         private readonly IRolesRepository rolesRepository;
+
         private readonly IUsersRepository usersRepository;
+
         public RolesService(IRolesRepository rolesRepository, IUsersRepository usersRepository)
         {
             this.rolesRepository = rolesRepository;

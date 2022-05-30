@@ -17,10 +17,15 @@ namespace BusinessLogicLayer.Services.Implementations
     public class UsersService : IUsersService
     {
         private readonly IUsersRepository usersRepository;
+
         private readonly IModelToDtoFactory modelToDtoFactory;
+
         private readonly IDtoToModelFactory dtoToModelFactory;
+
         private readonly IResultBuilderService resultBuilderService;
+
         private readonly IRolesService rolesService;
+
         private readonly UserManager<UserModel> userManager;
         public UsersService(IUsersRepository usersRepository, IModelToDtoFactory modelToDtoFactory, IDtoToModelFactory dtoToModelFactory, IResultBuilderService resultBuilderService, UserManager<UserModel> userManager, IRolesService rolesService)
         {

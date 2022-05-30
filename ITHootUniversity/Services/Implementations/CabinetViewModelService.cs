@@ -8,7 +8,9 @@ namespace ITHootUniversity.Services.Implementations
     public class CabinetViewModelService : ICabinetViewModelService
     {
         private readonly IUsersService usersService;
+
         private readonly ILessonsService lessonsService;
+
         private readonly IDtoToViewModelFactory dtoToViewModelFactory;
 
         public CabinetViewModelService(

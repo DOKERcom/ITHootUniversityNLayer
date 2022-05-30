@@ -12,6 +12,7 @@ namespace ITHootUniversity.Services.Implementations
     public class AuthorizationUserService : IAuthorizationUserService
     {
         private readonly SignInManager<UserModel> signInManager;
+
         private readonly IResultBuilderService resultBuilderService;
         public AuthorizationUserService(SignInManager<UserModel> signInManager, IResultBuilderService resultBuilderService)
         {

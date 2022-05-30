@@ -16,11 +16,17 @@ namespace BusinessLogicLayer.Services.Implementations
     public class LessonsService : ILessonsService
     {
         private readonly ILessonsRepository lessonsRepository;
+
         private readonly IModelToDtoFactory modelToDtoFactory;
+
         private readonly IResultBuilderService resultBuilderService;
+
         private readonly IUsersService usersService;
+
         private readonly IUsersInLessonsRepository usersInLessonsRepository;
+
         private readonly IRolesService rolesService;
+
         public LessonsService(ILessonsRepository lessonsRepository, IModelToDtoFactory modelToDtoFactory, IResultBuilderService resultBuilderService, IUsersService usersService, IRolesService rolesService, IUsersInLessonsRepository usersInLessonsRepository)
         {
             this.lessonsRepository = lessonsRepository;
@@ -61,6 +67,7 @@ namespace BusinessLogicLayer.Services.Implementations
         {
             return await lessonsRepository.DeleteLesson(lesson);
         }
+
         private async Task<int> ClearUsersInLessonsByLessonId(int lessonId)
         {
             return await usersInLessonsRepository.ClearUsersInLessonsByLessonId(lessonId);

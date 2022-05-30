@@ -14,10 +14,15 @@ namespace BusinessLogicLayer.Services.Implementations
     public class UsersInLessonsService : IUsersInLessonsService
     {
         private readonly IUsersInLessonsRepository usersInLessonsRepository;
+
         private readonly IUsersService usersService;
+
         private readonly ILessonsService lessonsService;
+
         private readonly IResultBuilderService resultBuilderService;
+
         private readonly IRolesService rolesService;
+
         public UsersInLessonsService(IUsersInLessonsRepository usersInLessonsRepository, IUsersService usersService, IResultBuilderService resultBuilderService, ILessonsService lessonsService, IRolesService rolesService)
         {
             this.usersInLessonsRepository = usersInLessonsRepository;
