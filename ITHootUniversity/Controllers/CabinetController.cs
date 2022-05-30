@@ -66,5 +66,17 @@ namespace ITHootUniversity.Controllers
         {
             return new JsonResult(await usersInLessonsService.DelUserFromLesson(lessonName, userName));
         }
+
+        [HttpPost]
+        public async Task<JsonResult> JoinToLesson(string lessonName)
+        {
+            return new JsonResult(await usersInLessonsService.JoinToLesson(lessonName, User.Identity.Name));
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> LeftFromLesson(string lessonName)
+        {
+            return new JsonResult(await usersInLessonsService.LeftFromLesson(lessonName, User.Identity.Name));
+        }
     }
 }

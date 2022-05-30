@@ -20,5 +20,9 @@ namespace BusinessLogicLayer.Services.Interfaces
         public Task<ModelForJsonResult> AddUserToLesson(string lessonName, string userName);
 
         public Task<ModelForJsonResult> DelUserFromLesson(string lessonName, string userName);
+
+        public Task<ModelForJsonResult> JoinToLesson(string userName, string lessonName);
+
+        public Task<ModelForJsonResult> LeftFromLesson(string userName, string lessonName);
     }
 }

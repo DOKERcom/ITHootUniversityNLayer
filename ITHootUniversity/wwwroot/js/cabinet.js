@@ -8,13 +8,8 @@
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
@@ -32,13 +27,8 @@ function DeleteUser(login) {
     request.addEventListener("readystatechange", () => {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
-            if (json.resultAction == "logout") {
-                window.location.href = "/Home/Logout";
-            }
-            else {
-                alert(json.resultMessage);
-                window.location.href = "/Cabinet";
-            }
+            alert(json.resultMessage);
+            window.location.href = "/Cabinet";
         }
     });
     request.send(params);
@@ -54,13 +44,8 @@ function CreateLesson(lessonName, login) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
@@ -79,13 +64,8 @@ function DeleteLesson(lessonName) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
@@ -104,13 +84,8 @@ function AddUserToLesson(lessonName, userName) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
@@ -129,13 +104,8 @@ function DelUserFromLesson(lessonName, userName) {
     request.addEventListener("readystatechange", () => {
         if (request.readyState === 4 && request.status === 200) {
             var json = JSON.parse(request.responseText);
-            if (json.resultAction == "logout") {
-                window.location.href = "/Home/Logout";
-            }
-            else {
-                alert(json.resultMessage);
-                window.location.href = "/Cabinet";
-            }
+            alert(json.resultMessage);
+            window.location.href = "/Cabinet";
         }
     });
         request.send(params);
@@ -154,13 +124,8 @@ function JoinToLesson(lessonName) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
@@ -179,13 +144,8 @@ function LeftFromLesson(lessonName) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                if (json.resultAction == "logout") {
-                    window.location.href = "/Home/Logout";
-                }
-                else {
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
-                }
+                alert(json.resultMessage);
+                window.location.href = "/Cabinet";
             }
         });
         request.send(params);
