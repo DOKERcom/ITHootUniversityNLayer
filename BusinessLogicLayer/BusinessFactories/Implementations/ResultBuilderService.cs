@@ -9,5 +9,6 @@ namespace ITHootUniversity.Services.Implementations
         {
             return new ModelForJsonResult { ResultAction = resultAction, ResultMessage = resultMessage };
         }
+
     }
 }

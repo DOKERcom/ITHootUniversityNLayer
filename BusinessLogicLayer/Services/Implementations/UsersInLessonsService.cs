@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Interfaces;
+using ITHootUniversity.Models;
+using ITHootUniversity.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +14,36 @@ namespace BusinessLogicLayer.Services.Implementations
     public class UsersInLessonsService : IUsersInLessonsService
     {
         private readonly IUsersInLessonsRepository usersInLessonsRepository;
-        public UsersInLessonsService(IUsersInLessonsRepository usersInLessonsRepository)
+        private readonly IUsersService usersService;
+        private readonly ILessonsService lessonsService;
+        private readonly IResultBuilderService resultBuilderService;
+        private readonly IRolesService rolesService;
+        public UsersInLessonsService(IUsersInLessonsRepository usersInLessonsRepository, IUsersService usersService, IResultBuilderService resultBuilderService, ILessonsService lessonsService, IRolesService rolesService)
         {
             this.usersInLessonsRepository = usersInLessonsRepository;
+            this.usersService = usersService;
+            this.resultBuilderService = resultBuilderService;
+            this.lessonsService = lessonsService;
+            this.rolesService = rolesService;
         }
 
         public async Task<bool> IsUserOnLesson(string lessonName, string userName)
         {
             UserModel? user = await usersInLessonsRepository.IsUserOnLesson(lessonName, userName);
 
-            return user == null ? true : false;
+            return user == null ? false : true;
         }
 
-        //public async Task<int> CountTeachersOnLesson(string lessonName)
-        //{
-        //    return await usersInLessonsRepository.CountTeachersOnLesson(lessonName);
-        //}
+        public async Task<int> CountTeachersOnLesson(string lessonName)
+        {
+            int i = 0;
+            foreach (var user in await usersInLessonsRepository.GetAllUsersOnLesson(lessonName))
+            {
+                if (await rolesService.IsUserInRole(await usersService.GetUserByLogin(user.UserName), "Teacher"))
+                    i++;
+            }
+            return i;
+        }
 
         public async Task<int> AddUserOnLessonById(int lessonId, string userId)
         {
@@ -45,9 +61,65 @@ namespace BusinessLogicLayer.Services.Implementations
             return await usersInLessonsRepository.DeleteUserFromLessonById(lessonId, userId);
         }
 
-        public async Task<int> ClearCompareLessonById(int id)
+        public async Task<int> ClearUsersInLessonsByLessonId(int lessonId)
         {
-            return await usersInLessonsRepository.ClearCompareLessonById(id);
+            return await usersInLessonsRepository.ClearUsersInLessonsByLessonId(lessonId);
+        }
+
+        public async Task<ModelForJsonResult> AddUserToLesson(string lessonName, string userName)
+        {
+            if (await usersService.GetUserByLogin(userName) == null)
+                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+
+            if (await lessonsService.GetLessonByLessonName(lessonName) == null)
+                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+
+            if (await IsUserOnLesson(lessonName, userName))
+                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) already joined to the lesson ({lessonName})");
+
+
+            if (await rolesService.IsUserInRole(await usersService.GetUserByLogin(userName), "Teacher"))
+            {
+                if (await CountTeachersOnLesson(lessonName) < 2)
+                {
+                    await AddUserOnLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
+                        return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) added to the lesson ({lessonName})");
+                }
+                else
+                {
+                    return resultBuilderService.ToModelForJsonResult("", $"There are a lot of Teacher on lesson ({lessonName})");
+                }
+            }
+            else
+            {
+                await AddUserOnLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
+                    return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) added to the lesson ({lessonName})");
+            }
+        }
+
+        public async Task<ModelForJsonResult> DelUserFromLesson(string lessonName, string userName)
+        {
+            if (await usersService.GetUserByLogin(userName) == null)
+                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+
+            if (await lessonsService.GetLessonByLessonName(lessonName) == null)
+                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+
+            if (!await IsUserOnLesson(lessonName, userName))
+                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) didn't find on lesson ({lessonName})");
+
+            await DeleteUserFromLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
+
+            if (await rolesService.IsUserInRole(await usersService.GetUserByLogin(userName), "Teacher"))
+            {
+                if (await CountTeachersOnLesson(lessonName) < 1)
+                {
+                    await ClearUsersInLessonsByLessonId((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId);
+                    await lessonsService.DeleteLesson(lessonName);
+                }
+            }
+
+            return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) was remove from the lesson ({lessonName})");
         }
     }
 }

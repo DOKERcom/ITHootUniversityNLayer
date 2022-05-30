@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITHootUniversity.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,10 @@ namespace BusinessLogicLayer.Services.Interfaces
 
         public Task<int> DeleteUserFromLessonById(int lessonId, string userId);
 
-        public Task<int> ClearCompareLessonById(int id);
+        public Task<int> ClearUsersInLessonsByLessonId(int lessonId);
+
+        public Task<ModelForJsonResult> AddUserToLesson(string lessonName, string userName);
+
+        public Task<ModelForJsonResult> DelUserFromLesson(string lessonName, string userName);
     }
 }

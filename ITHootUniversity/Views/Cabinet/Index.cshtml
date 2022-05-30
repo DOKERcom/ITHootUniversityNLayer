@@ -42,9 +42,9 @@
                     @{
                         if (Model != null && Model.UserViewModels != null) 
                         {
-                            foreach (var User in Model.UserViewModels)
+                            foreach (var user in Model.UserViewModels)
                             {
-                                <option value="@User.UserName">@User.UserName</option>
+                                <option value="@user.UserName">@user.UserName</option>
                             } 
                         }
                      } 
@@ -68,16 +68,17 @@
                 <label for="CrLogin">Choose teacher:</label>
                 <select id="CrLogin" name="CrLogin">
                     @{
-                        //if (ViewBag.Users != null) 
-                        //{
-                        //    foreach (var User in ViewBag.Users)
-                        //    {
-                        //        if (User.UserType == UserTypeEnum.Teacher) 
-                        //        {
-                        //            <option value="@User.Login">@User.Login</option>
-                        //        }
-                        //    } 
-                        //}
+                        if (Model != null && Model.UserViewModels != null) 
+                        {
+                            
+                            foreach (var user in Model.UserViewModels)
+                            {
+                                if(user.Role == "Teacher")
+                                {
+                                    <option value="@user.UserName">@user.UserName</option>
+                                }
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -97,9 +98,9 @@
                      @{
                         if (Model != null && Model.LessonViewModels != null) 
                         {
-                            foreach (var Lesson in Model.LessonViewModels)
+                            foreach (var lesson in Model.LessonViewModels)
                             {
-                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                                <option value="@lesson.LessonName">@lesson.LessonName</option>
                             } 
                         }
                      } 
@@ -135,9 +136,9 @@
                     @{
                         if (Model != null && Model.UserViewModels != null) 
                         {
-                            foreach (var User in Model.UserViewModels)
+                            foreach (var user in Model.UserViewModels)
                             {
-                                <option value="@User.UserName">@User.UserName</option>
+                                <option value="@user.UserName">@user.UserName</option>
                             } 
                         }
                      } 
@@ -159,9 +160,9 @@
                      @{
                         if (Model != null && Model.LessonViewModels != null) 
                         {
-                            foreach (var Lesson in Model.LessonViewModels)
+                            foreach (var lesson in Model.LessonViewModels)
                             {
-                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                                <option value="@lesson.LessonName">@lesson.LessonName</option>
                             } 
                         }
                      } 
@@ -173,9 +174,9 @@
                     @{
                         if (Model != null && Model.UserViewModels != null) 
                         {
-                            foreach (var User in Model.UserViewModels)
+                            foreach (var user in Model.UserViewModels)
                             {
-                                <option value="@User.UserName">@User.UserName</option>
+                                <option value="@user.UserName">@user.UserName</option>
                             } 
                         }
                      } 
@@ -198,9 +199,9 @@
                      @{
                         if (Model != null && Model.LessonViewModels != null) 
                         {
-                            foreach (var Lesson in Model.LessonViewModels)
+                            foreach (var lesson in Model.LessonViewModels)
                             {
-                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                                <option value="@lesson.LessonName">@lesson.LessonName</option>
                             } 
                         }
                      } 
@@ -222,9 +223,9 @@
                      @{
                         if (Model != null && Model.LessonViewModels != null) 
                         {
-                            foreach (var Lesson in Model.LessonViewModels)
+                            foreach (var lesson in Model.LessonViewModels)
                             {
-                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                                <option value="@lesson.LessonName">@lesson.LessonName</option>
                             } 
                         }
                      } 

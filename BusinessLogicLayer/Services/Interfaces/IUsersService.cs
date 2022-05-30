@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.DtoModels;
 using DataAccessLayer.Models;
+using ITHootUniversity.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace BusinessLogicLayer.Services.Interfaces
         public Task<IdentityResult> CreateUser(UserModel user, string password);
 
         public Task<IdentityResult> DeleteUser(UserModel user);
+
+        public Task<ModelForJsonResult> CreateOrUpdateUser(DtoUserModel user);
+
+        public Task<ModelForJsonResult> DeleteUser(string userName);
 
     }
 }

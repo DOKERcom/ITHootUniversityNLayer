@@ -39,7 +39,6 @@ builder.Services.AddScoped<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ILessonsService, LessonsService>();
 builder.Services.AddTransient<IUsersInLessonsService, UsersInLessonsService>();
-builder.Services.AddTransient<ICRUDUserService, CRUDUserService>();
 builder.Services.AddTransient<IAuthorizationUserService, AuthorizationUserService>();
 builder.Services.AddTransient<IResultBuilderService, ResultBuilderService>();
 builder.Services.AddTransient<IRolesService, RolesService>();
@@ -49,6 +48,8 @@ builder.Services.AddTransient<IModelToDtoFactory, ModelToDtoFactory>();
 builder.Services.AddTransient<IDtoToModelFactory, DtoToModelFactory>();
 builder.Services.AddTransient<IViewModelToDtoFactory, ViewModelToDtoFactory>();
 builder.Services.AddTransient<IDtoToViewModelFactory, DtoToViewModelFactory>();
+
+
 
 var app = builder.Build();
 

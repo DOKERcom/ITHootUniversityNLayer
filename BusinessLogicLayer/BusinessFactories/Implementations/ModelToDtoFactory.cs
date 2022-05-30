@@ -18,7 +18,10 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
 
             foreach (LessonModel lesson in lessons)
             {
-                dtoLessons.Add(new DtoLessonModel { LessonName = lesson.LessonName });
+                dtoLessons.Add(new DtoLessonModel {
+                    LessonId = lesson.Id,
+                    LessonName = lesson.LessonName
+                });
             }
 
             return dtoLessons;
@@ -26,8 +29,11 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
 
         public DtoLessonModel TransformLessonModelToDtoLessonModel(LessonModel lesson)
         {
+            if (lesson == null)
+                return null;
             DtoLessonModel dtoLesson = new DtoLessonModel
             {
+                LessonId = lesson.Id,
                 LessonName = lesson.LessonName
             };
 

@@ -25,16 +25,15 @@ namespace DataAccessLayer.Repositories.Implementations
                             select Users).FirstOrDefaultAsync();
         }
 
-        //public async Task<int> CountTeachersOnLesson(string lessonName)
-        //{
-        //    var users = await (from UsersInLessons in db.UsersInLessons
-        //                       join Users in db.Users on UsersInLessons.UserId equals Users.Id
-        //                       where Users. == UserTypeEnum.Teacher
-        //                       join Lessons in db.Lessons on UsersInLessons.Lid equals Lessons.Id
-        //                       where Lessons.LessonName == lessonName
-        //                       select Users).ToListAsync();
-        //    return users.Count();
-        //}
+        public async Task<List<UserModel>> GetAllUsersOnLesson(string lessonName)
+        {
+            var users = await (from UsersInLessons in db.UsersInLessons
+                                   join Users in db.Users on UsersInLessons.UserId equals Users.Id
+                                   join Lessons in db.Lessons on UsersInLessons.LessonId equals Lessons.Id
+                               where Lessons.LessonName == lessonName
+                               select Users).ToListAsync();
+            return users;
+        }
 
         public async Task<int> AddUserOnLessonById(UserInLessonModel userInLesson)
         {
@@ -48,7 +47,7 @@ namespace DataAccessLayer.Repositories.Implementations
             return await db.SaveChangesAsync();
         }
 
-        public async Task<int> ClearCompareLessonById(int lessonId)
+        public async Task<int> ClearUsersInLessonsByLessonId(int lessonId)
         {
             db.UsersInLessons.RemoveRange(db.UsersInLessons.Where(b => b.LessonId == lessonId).ToList());
             return await db.SaveChangesAsync();

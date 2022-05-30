@@ -10,7 +10,11 @@ namespace ITHootUniversity.Services.Implementations
         private readonly IUsersService usersService;
         private readonly ILessonsService lessonsService;
         private readonly IDtoToViewModelFactory dtoToViewModelFactory;
-        public CabinetViewModelService(IUsersService usersService, IDtoToViewModelFactory dtoToViewModelFactory, ILessonsService lessonsService)
+
+        public CabinetViewModelService(
+            IUsersService usersService, 
+            IDtoToViewModelFactory dtoToViewModelFactory, 
+            ILessonsService lessonsService)
         {
             this.usersService = usersService;
             this.dtoToViewModelFactory = dtoToViewModelFactory;
@@ -20,7 +24,9 @@ namespace ITHootUniversity.Services.Implementations
         public async Task<CabinetViewModel> CreateAndFillCabinetViewModel()
         {
             CabinetViewModel cabinetViewModel = new CabinetViewModel();
-            cabinetViewModel.UserViewModels = dtoToViewModelFactory.TransformDtoUserModelToUserViewModel(await usersService.GetAllDtoUsers());
+
+            cabinetViewModel.UserViewModels = await dtoToViewModelFactory.TransformDtoUserModelToUserViewModel(await usersService.GetAllDtoUsers());
+
             cabinetViewModel.LessonViewModels = dtoToViewModelFactory.TransformDtoLessonModelToLessonViewModel(await lessonsService.GetAllDtoLessons());
 
             return cabinetViewModel;

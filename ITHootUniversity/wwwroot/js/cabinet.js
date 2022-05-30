@@ -48,7 +48,7 @@ function CreateLesson(lessonName, login) {
     if (lessonName.length > 0 && login.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/CreateLesson";
-        const params = "LessonName=" + lessonName + "&Login=" + login;
+        const params = "lessonName=" + lessonName + "&userName=" + login;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {
@@ -73,7 +73,7 @@ function DeleteLesson(lessonName) {
     if (lessonName.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/DeleteLesson";
-        const params = "LessonName=" + lessonName;
+        const params = "lessonName=" + lessonName;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {
@@ -94,11 +94,11 @@ function DeleteLesson(lessonName) {
     }
 }
 
-function AddUserToLesson(lessonName, login) {
-    if (lessonName.length > 0 && login.length > 0) {
+function AddUserToLesson(lessonName, userName) {
+    if (lessonName.length > 0 && userName.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/AddUserToLesson";
-        const params = "LessonName=" + lessonName +"&Login=" + login;
+        const params = "lessonName=" + lessonName + "&userName=" + userName;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {
@@ -119,11 +119,11 @@ function AddUserToLesson(lessonName, login) {
     }
 }
 
-function DelUserFromLesson(lessonName, login) {
-    if (lessonName.length > 0 && login.length > 0) {
+function DelUserFromLesson(lessonName, userName) {
+    if (lessonName.length > 0 && userName.length > 0) {
     const request = new XMLHttpRequest();
     const url = "/Cabinet/DelUserFromLesson";
-    const params = "LessonName=" + lessonName + "&Login=" + login;
+        const params = "lessonName=" + lessonName + "&userName=" + userName;
     request.open("POST", url, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.addEventListener("readystatechange", () => {
@@ -148,7 +148,7 @@ function JoinToLesson(lessonName) {
     if (lessonName.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/JoinToLesson";
-        const params = "LessonName=" + lessonName;
+        const params = "lessonName=" + lessonName;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {
@@ -173,7 +173,7 @@ function LeftFromLesson(lessonName) {
     if (lessonName.length > 0) {
         const request = new XMLHttpRequest();
         const url = "/Cabinet/LeftFromLesson";
-        const params = "LessonName=" + lessonName;
+        const params = "lessonName=" + lessonName;
         request.open("POST", url, true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.addEventListener("readystatechange", () => {

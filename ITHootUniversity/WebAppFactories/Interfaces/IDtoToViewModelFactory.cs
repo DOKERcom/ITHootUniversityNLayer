@@ -7,7 +7,7 @@ namespace ITHootUniversity.WebAppFactories.Interfaces
     {
         public UserViewModel TransformDtoUserModelToUserViewModel(DtoUserModel user);
 
-        public List<UserViewModel> TransformDtoUserModelToUserViewModel(IEnumerable<DtoUserModel> users);
+        public Task<List<UserViewModel>> TransformDtoUserModelToUserViewModel(IEnumerable<DtoUserModel> users);
 
         public List<LessonViewModel> TransformDtoLessonModelToLessonViewModel(IEnumerable<DtoLessonModel> lessons);
 

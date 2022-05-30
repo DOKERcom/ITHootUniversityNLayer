@@ -15,6 +15,8 @@ namespace DataAccessLayer.Repositories.Interfaces
 
         public Task<int> DeleteUserFromLessonById(int lessonId, string userId);
 
-        public Task<int> ClearCompareLessonById(int lessonId);
+        public Task<List<UserModel>> GetAllUsersOnLesson(string lessonName);
+
+        public Task<int> ClearUsersInLessonsByLessonId(int lessonId);
     }
 }

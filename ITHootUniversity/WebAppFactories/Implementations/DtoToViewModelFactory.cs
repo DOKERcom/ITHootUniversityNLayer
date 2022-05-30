@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Services.Interfaces;
 using ITHootUniversity.ViewModels;
 using ITHootUniversity.WebAppFactories.Interfaces;
 
@@ -6,6 +7,12 @@ namespace ITHootUniversity.WebAppFactories.Implementations
 {
     public class DtoToViewModelFactory : IDtoToViewModelFactory
     {
+        private readonly IRolesService rolesService;
+        public DtoToViewModelFactory(IRolesService rolesService)
+        {
+            this.rolesService = rolesService;
+        }
+
         public LessonViewModel TransformDtoLessonModelToLessonViewModel(DtoLessonModel lesson)
         {
             LessonViewModel lessonViewModel = new LessonViewModel
@@ -38,13 +45,14 @@ namespace ITHootUniversity.WebAppFactories.Implementations
             return userViewModel;
         }
 
-        public List<UserViewModel> TransformDtoUserModelToUserViewModel(IEnumerable<DtoUserModel> users)
+        public async Task<List<UserViewModel>> TransformDtoUserModelToUserViewModel(IEnumerable<DtoUserModel> users)
         {
             List<UserViewModel> userViewModels = new List<UserViewModel>();
-
             foreach (DtoUserModel user in users)
             {
-                userViewModels.Add(new UserViewModel { UserName = user.UserName });
+                userViewModels.Add(new UserViewModel { 
+                    UserName = user.UserName, 
+                    Role = (await rolesService.GetUserRoles(user.UserName)).FirstOrDefault() });
             }
 
             return userViewModels;
