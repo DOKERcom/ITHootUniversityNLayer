@@ -11,11 +11,13 @@ namespace BusinessLogicLayer.Services.Interfaces
 {
     public interface IUsersService
     {
-        public Task<DtoUserModel> GetUserById(string id);
+        public Task<UserModel> GetUserById(string id);
 
-        public Task<DtoUserModel> GetUserByLogin(string userName);
+        public Task<UserModel> GetUserByLogin(string userName);
 
-        public Task<List<DtoUserModel>> GetAllUsers();
+        public Task<List<UserModel>> GetAllUsers();
+
+        public Task<List<DtoUserModel>> GetAllDtoUsers();
 
         public Task<IdentityResult> UpdateUser(UserModel user);
 

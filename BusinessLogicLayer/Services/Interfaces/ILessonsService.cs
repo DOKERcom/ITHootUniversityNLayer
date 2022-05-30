@@ -10,7 +10,9 @@ namespace BusinessLogicLayer.Services.Interfaces
 {
     public interface ILessonsService
     {
-        public Task<List<DtoLessonModel>> GetAllLessons();
+        public Task<List<DtoLessonModel>> GetAllDtoLessons();
+
+        public Task<List<LessonModel>> GetAllLessons();
 
         public Task<DtoLessonModel> GetLessonByLessonName(string lessonName);
 

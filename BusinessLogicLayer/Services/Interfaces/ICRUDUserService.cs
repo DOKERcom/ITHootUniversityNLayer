@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DtoModels;
+using ITHootUniversity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services.Interfaces
 {
-    public interface ICreateOrUpdateUserService
+    public interface ICRUDUserService
     {
-        public Task CreateOrUpdateUser(DtoUserModel user);
+        public Task<ModelForJsonResult> CreateOrUpdateUser(DtoUserModel user);
+
+        public Task<ModelForJsonResult> DeleteUser(string userName);
     }
 }

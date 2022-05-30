@@ -26,7 +26,7 @@
 function DeleteUser(login) {
     const request = new XMLHttpRequest();
     const url = "/Cabinet/DeleteUser";
-    const params = "Login=" + login;
+    const params = "userName=" + login;
     request.open("POST", url, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.addEventListener("readystatechange", () => {

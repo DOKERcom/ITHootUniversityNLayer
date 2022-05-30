@@ -12,6 +12,8 @@ using ITHootUniversity.Services.Interfaces;
 using ITHootUniversity.Services.Implementations;
 using ITHootUniversity.WebAppFactories.Interfaces;
 using ITHootUniversity.WebAppFactories.Implementations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,23 +28,27 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 
 builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlServer(connection));
 
-builder.Services.AddIdentity<UserModel, IdentityRole>().AddEntityFrameworkStores<UniversityDbContext>();
+builder.Services.AddIdentity<UserModel, IdentityRole>()
+    .AddEntityFrameworkStores<UniversityDbContext>();
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ILessonsRepository, LessonsRepository>();
 builder.Services.AddScoped<IUsersInLessonsRepository, UsersInLessonsRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ILessonsService, LessonsService>();
 builder.Services.AddTransient<IUsersInLessonsService, UsersInLessonsService>();
-builder.Services.AddTransient<ICreateOrUpdateUserService, CreateOrUpdateUserService>();
+builder.Services.AddTransient<ICRUDUserService, CRUDUserService>();
+builder.Services.AddTransient<IAuthorizationUserService, AuthorizationUserService>();
+builder.Services.AddTransient<IResultBuilderService, ResultBuilderService>();
+builder.Services.AddTransient<IRolesService, RolesService>();
+builder.Services.AddTransient<ICabinetViewModelService, CabinetViewModelService>();
 
 builder.Services.AddTransient<IModelToDtoFactory, ModelToDtoFactory>();
 builder.Services.AddTransient<IDtoToModelFactory, DtoToModelFactory>();
 builder.Services.AddTransient<IViewModelToDtoFactory, ViewModelToDtoFactory>();
-
-
-builder.Services.AddTransient<IAuthorizationUserService, AuthorizationUserService>();
-builder.Services.AddTransient<IResultBuilderService, ResultBuilderService>();
+builder.Services.AddTransient<IDtoToViewModelFactory, DtoToViewModelFactory>();
 
 var app = builder.Build();
 

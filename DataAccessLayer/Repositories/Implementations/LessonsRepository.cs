@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repositories.Implementations
             db = context;
         }
 
-        public async Task<IEnumerable<LessonModel>> GetAllLessons()
+        public async Task<List<LessonModel>> GetAllLessons()
         {
             return await db.Lessons.ToListAsync();
         }

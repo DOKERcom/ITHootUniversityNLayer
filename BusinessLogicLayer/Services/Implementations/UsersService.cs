@@ -23,17 +23,22 @@ namespace BusinessLogicLayer.Services.Implementations
         }
 
 
-        public async Task<DtoUserModel> GetUserById(string id)
+        public async Task<UserModel> GetUserById(string id)
         {
-            return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetUserById(id));
+            return await usersRepository.GetUserById(id);
         }
 
-        public async Task<DtoUserModel> GetUserByLogin(string userName)
+        public async Task<UserModel> GetUserByLogin(string userName)
         {
-            return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetUserByUserName(userName));
+            return await usersRepository.GetUserByUserName(userName);
         }
 
-        public async Task<List<DtoUserModel>> GetAllUsers()
+        public async Task<List<UserModel>> GetAllUsers()
+        {
+            return await usersRepository.GetAllUsers();
+        }
+
+        public async Task<List<DtoUserModel>> GetAllDtoUsers()
         {
             return modelToDtoFactory.TransformUserModelToDtoUserModel(await usersRepository.GetAllUsers());
         }

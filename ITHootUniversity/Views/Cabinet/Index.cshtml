@@ -1,10 +1,9 @@
-﻿<link rel="stylesheet" type="text/css" href="css/cabinet.css">
+﻿@model CabinetViewModel
+<link rel="stylesheet" type="text/css" href="css/cabinet.css">
 <div class="maintenance_blocks">
     @{
         if (User.IsInRole("Admin"))
         {
-
-        
 
     <div class="maintenance_block">
         <div class="form">
@@ -41,13 +40,13 @@
                 <label for="DelULogin">Choose user:</label>
                 <select id="DelULogin" name="Login">
                     @{
-                        //if (ViewBag.Users != null) 
-                        //{
-                        //    foreach (var User in ViewBag.Users)
-                        //    {
-                        //        <option value="@User.Login">@User.Login</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.UserViewModels != null) 
+                        {
+                            foreach (var User in Model.UserViewModels)
+                            {
+                                <option value="@User.UserName">@User.UserName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -96,13 +95,13 @@
                 <label for="DelLessonName">Choose Lesson:</label>
                 <select id="DelLessonName" name="DelLessonName">
                      @{
-                        //if (ViewBag.Lessons != null) 
-                        //{
-                        //    foreach (var Lesson in ViewBag.Lessons)
-                        //    {
-                        //        <option value="@Lesson.LessonName">@Lesson.LessonName</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.LessonViewModels != null) 
+                        {
+                            foreach (var Lesson in Model.LessonViewModels)
+                            {
+                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -120,13 +119,13 @@
                 <label for="AddULLessonName">Choose Lesson:</label>
                 <select id="AddULLessonName" name="AddULLessonName">
                      @{
-                        //if (ViewBag.Lessons != null) 
-                        //{
-                        //    foreach (var Lesson in ViewBag.Lessons)
-                        //    {
-                        //        <option value="@Lesson.LessonName">@Lesson.LessonName</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.LessonViewModels != null) 
+                        {
+                            foreach (var Lesson in Model.LessonViewModels)
+                            {
+                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -134,13 +133,13 @@
                 <label for="AddULLogin">Choose user:</label>
                 <select id="AddULLogin" name="AddULLogin">
                     @{
-                        //if (ViewBag.Users != null) 
-                        //{
-                        //    foreach (var User in ViewBag.Users)
-                        //    {
-                        //        <option value="@User.Login">@User.Login</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.UserViewModels != null) 
+                        {
+                            foreach (var User in Model.UserViewModels)
+                            {
+                                <option value="@User.UserName">@User.UserName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -158,13 +157,13 @@
                 <label for="DelUFLLessonName">Choose Lesson:</label>
                 <select id="DelUFLLessonName" name="DelUFLLessonName">
                      @{
-                        //if (ViewBag.Lessons != null) 
-                        //{
-                        //    foreach (var Lesson in ViewBag.Lessons)
-                        //    {
-                        //        <option value="@Lesson.LessonName">@Lesson.LessonName</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.LessonViewModels != null) 
+                        {
+                            foreach (var Lesson in Model.LessonViewModels)
+                            {
+                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -172,13 +171,13 @@
                 <label for="DelUFLLogin">Choose user:</label>
                 <select id="DelUFLLogin" name="DelUFLLogin">
                     @{
-                        //if (ViewBag.Users != null) 
-                        //{
-                        //    foreach (var User in ViewBag.Users)
-                        //    {
-                        //        <option value="@User.Login">@User.Login</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.UserViewModels != null) 
+                        {
+                            foreach (var User in Model.UserViewModels)
+                            {
+                                <option value="@User.UserName">@User.UserName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -197,13 +196,13 @@
                 <label for="JoinLessonName">Choose Lesson:</label>
                 <select id="JoinLessonName" name="JoinLessonName">
                      @{
-                        //if (ViewBag.Lessons != null) 
-                        //{
-                        //    foreach (var Lesson in ViewBag.Lessons)
-                        //    {
-                        //        <option value="@Lesson.LessonName">@Lesson.LessonName</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.LessonViewModels != null) 
+                        {
+                            foreach (var Lesson in Model.LessonViewModels)
+                            {
+                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>
@@ -221,13 +220,13 @@
                 <label for="LeftLessonName">Choose Lesson:</label>
                 <select id="LeftLessonName" name="LeftLessonName">
                      @{
-                        //if (ViewBag.Lessons != null) 
-                        //{
-                        //    foreach (var Lesson in ViewBag.Lessons)
-                        //    {
-                        //        <option value="@Lesson.LessonName">@Lesson.LessonName</option>
-                        //    } 
-                        //}
+                        if (Model != null && Model.LessonViewModels != null) 
+                        {
+                            foreach (var Lesson in Model.LessonViewModels)
+                            {
+                                <option value="@Lesson.LessonName">@Lesson.LessonName</option>
+                            } 
+                        }
                      } 
                 </select>
             </div>

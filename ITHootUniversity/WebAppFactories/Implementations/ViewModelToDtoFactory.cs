@@ -6,7 +6,7 @@ namespace ITHootUniversity.WebAppFactories.Implementations
 {
     public class ViewModelToDtoFactory : IViewModelToDtoFactory
     {
-        public DtoUserModel TransformUserViewModelToDtoUserModel(UserViewModel user)
+        public DtoUserModel TransformCRUDUserViewModelToDtoUserModel(CRUDUserViewModel user)
         {
             DtoUserModel dtoUser = new DtoUserModel
             {

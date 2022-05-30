@@ -35,8 +35,7 @@ namespace DataAccessLayer.Repositories.Implementations
 
         public async Task<IdentityResult> CreateUser(UserModel user, string password)
         {
-            var result = await userManager.CreateAsync(user, password); //TODO не даёт ответ когда все норм и не создает пользователя
-            return result;
+            return await userManager.CreateAsync(user, password);
         }
 
         public async Task<IdentityResult> DeleteUser(UserModel user)

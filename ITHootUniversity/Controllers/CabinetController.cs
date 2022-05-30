@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Services.Implementations;
 using BusinessLogicLayer.Services.Interfaces;
+using ITHootUniversity.Services.Interfaces;
 using ITHootUniversity.ViewModels;
 using ITHootUniversity.WebAppFactories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -11,23 +12,31 @@ namespace ITHootUniversity.Controllers
     [Authorize]
     public class CabinetController : Controller
     {
-        private readonly ICreateOrUpdateUserService createOrUpdateUserService;
+        private readonly ICRUDUserService CRUDUserService;
         private readonly IViewModelToDtoFactory viewModelToDtoFactory;
-        public CabinetController(ICreateOrUpdateUserService createOrUpdateUserService, IViewModelToDtoFactory viewModelToDtoFactory)
+        private readonly ICabinetViewModelService cabinetViewModelService;
+        public CabinetController(ICRUDUserService CRUDUserService, IViewModelToDtoFactory viewModelToDtoFactory, ICabinetViewModelService cabinetViewModelService)
         {
-            this.createOrUpdateUserService = createOrUpdateUserService;
+            this.CRUDUserService = CRUDUserService;
             this.viewModelToDtoFactory = viewModelToDtoFactory;
+            this.cabinetViewModelService = cabinetViewModelService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await cabinetViewModelService.CreateAndFillCabinetViewModel());
         }
 
         [HttpPost]
-        public async Task CreateOrUpdateUser(UserViewModel user)
+        public async Task<JsonResult> CreateOrUpdateUser(CRUDUserViewModel user)
         {
-            await createOrUpdateUserService.CreateOrUpdateUser(viewModelToDtoFactory.TransformUserViewModelToDtoUserModel(user));
+           return new JsonResult(await CRUDUserService.CreateOrUpdateUser(viewModelToDtoFactory.TransformCRUDUserViewModelToDtoUserModel(user)));
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteUser(string userName)
+        {
+            return new JsonResult(await CRUDUserService.DeleteUser(userName));
         }
     }
 }

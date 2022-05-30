@@ -4,6 +4,5 @@ namespace DataAccessLayer.Models
 {
     public class UserModel : IdentityUser
     {
-        public string RealName { get; set; }
     }
 }

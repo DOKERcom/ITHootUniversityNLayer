@@ -21,7 +21,13 @@ namespace BusinessLogicLayer.Services.Implementations
             this.modelToDtoFactory = modelToDtoFactory;
         }
 
-        public async Task<List<DtoLessonModel>> GetAllLessons()
+
+        public async Task<List<LessonModel>> GetAllLessons()
+        {
+            return await lessonsRepository.GetAllLessons();
+        }
+
+        public async Task<List<DtoLessonModel>> GetAllDtoLessons()
         {
             return modelToDtoFactory.TransformLessonModelToDtoLessonModel(await lessonsRepository.GetAllLessons());
         }

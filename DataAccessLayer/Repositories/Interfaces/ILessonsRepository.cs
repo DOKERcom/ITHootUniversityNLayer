@@ -9,7 +9,7 @@ namespace DataAccessLayer.Repositories.Interfaces
 {
     public interface ILessonsRepository
     {
-        public Task<IEnumerable<LessonModel>> GetAllLessons();
+        public Task<List<LessonModel>> GetAllLessons();
 
         public Task<LessonModel> GetLessonByLessonName(string lessonName);
 
