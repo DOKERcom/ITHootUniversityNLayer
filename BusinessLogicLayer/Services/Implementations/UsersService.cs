@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using BusinessLogicLayer.Services.Interfaces;
 using BusinessLogicLayer.BusinessFactories.Interfaces;
 using ITHootUniversity.Models;
-using ITHootUniversity.Services.Interfaces;
 
 namespace BusinessLogicLayer.Services.Implementations
 {
@@ -78,6 +77,9 @@ namespace BusinessLogicLayer.Services.Implementations
             UserModel userR = await GetUserByLogin(user.UserName);
             if (userR == null)
             {
+                if (string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.Role))
+                    return resultBuilderService.ToModelForJsonResult("", $"All fields must be filled!");
+
                 if ((await CreateUser(dtoToModelFactory.TransformDtoUserModelToUserModel(user), user.Password)).Succeeded)
                 {
                     await rolesService.AddUserToRole(await GetUserByLogin(user.UserName), user.Role);

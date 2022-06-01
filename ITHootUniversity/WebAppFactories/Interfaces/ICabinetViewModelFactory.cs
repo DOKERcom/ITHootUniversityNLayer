@@ -1,8 +1,8 @@
 ﻿using ITHootUniversity.ViewModels;
 
-namespace ITHootUniversity.Services.Interfaces
+namespace ITHootUniversity.WebAppFactories.Interfaces
 {
-    public interface ICabinetViewModelService
+    public interface ICabinetViewModelFactory
     {
         public Task<CabinetViewModel> CreateAndFillCabinetViewModel();
     }

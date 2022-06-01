@@ -11,7 +11,7 @@ namespace DataAccessLayer.Repositories.Interfaces
     {
         public Task<UserModel?> IsUserOnLesson(string lessonName, string userName);
 
-        public Task<int> AddUserOnLessonById(UserInLessonModel userInLesson);
+        public Task<int> AddUserOnLessonById(int lessonId, string userId);
 
         public Task<int> DeleteUserFromLessonById(int lessonId, string userId);
 

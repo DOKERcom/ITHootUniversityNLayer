@@ -1,7 +1,7 @@
-﻿using ITHootUniversity.Models;
-using ITHootUniversity.Services.Interfaces;
+﻿using BusinessLogicLayer.Services.Interfaces;
+using ITHootUniversity.Models;
 
-namespace ITHootUniversity.Services.Implementations
+namespace BusinessLogicLayer.Services.Implementations
 {
     public class ResultBuilderService : IResultBuilderService
     {

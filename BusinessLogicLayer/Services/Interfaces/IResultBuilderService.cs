@@ -1,6 +1,6 @@
 ﻿using ITHootUniversity.Models;
 
-namespace ITHootUniversity.Services.Interfaces
+namespace BusinessLogicLayer.Services.Interfaces
 {
     public interface IResultBuilderService
     {

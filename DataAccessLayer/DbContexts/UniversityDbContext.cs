@@ -6,8 +6,8 @@ namespace DataAccessLayer.DbContexts
 {
     public class UniversityDbContext : IdentityDbContext<UserModel>
     {
+        public DbSet<UserModel> Users { get; set; }
         public DbSet<LessonModel> Lessons { get; set; }
-        public DbSet<UserInLessonModel> UsersInLessons { get; set; }
         public UniversityDbContext(DbContextOptions<UniversityDbContext> options) : base(options)
         {
             Database.EnsureCreated();

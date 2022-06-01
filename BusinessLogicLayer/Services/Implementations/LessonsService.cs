@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ITHootUniversity.Models;
-using ITHootUniversity.Services.Interfaces;
 
 namespace BusinessLogicLayer.Services.Implementations
 {
@@ -85,6 +84,8 @@ namespace BusinessLogicLayer.Services.Implementations
                 return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) is not a teacher!");
 
             await CreateLesson(new LessonModel { LessonName = lessonName });
+
+            await usersInLessonsRepository.AddUserOnLessonById((await GetLessonByLessonName(lessonName)).Id, (await usersService.GetUserByLogin(userName)).Id);
 
             return resultBuilderService.ToModelForJsonResult("", $"You have successfully created a lesson ({lessonName}) and added a teacher ({userName})!");
         }

@@ -11,5 +11,11 @@ namespace DataAccessLayer.Models
 
         [Required]
         public string LessonName { get; set; }
+
+        public virtual List<UserModel> Users { get; set; }
+        public LessonModel()
+        {
+            Users = new List<UserModel>();
+        }
     }
 }

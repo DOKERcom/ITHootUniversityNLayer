@@ -10,46 +10,56 @@ namespace DataAccessLayer.Repositories.Implementations
     public class UsersInLessonsRepository : IUsersInLessonsRepository
     {
         private UniversityDbContext db;
-        public UsersInLessonsRepository(UniversityDbContext context)
+        private IUsersRepository usersRepository;
+        public UsersInLessonsRepository(UniversityDbContext context, IUsersRepository usersRepository)
         {
             db = context;
+            this.usersRepository = usersRepository;
         }
 
-        public async Task<UserModel?> IsUserOnLesson(string lessonName, string userName)
+        public async Task<UserModel> IsUserOnLesson(string lessonName, string userName)
         {
-            return await    (from UsersInLessons in db.UsersInLessons
-                            join Users in db.Users on UsersInLessons.UserId equals Users.Id
-                            where Users.UserName == userName
-                            join Lessons in db.Lessons on UsersInLessons.LessonId equals Lessons.Id
-                            where Lessons.LessonName == lessonName
-                            select Users).FirstOrDefaultAsync();
+            var lessons = await db.Lessons.Include(u => u.Users).ToListAsync();
+            foreach(var lesson in lessons)
+            {
+                if (lesson.LessonName == lessonName) 
+                {
+                    foreach (var user in lesson.Users)
+                    {
+                        if (user.UserName == userName)
+                        {
+                            return user;
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         public async Task<List<UserModel>> GetAllUsersOnLesson(string lessonName)
         {
-            var users = await (from UsersInLessons in db.UsersInLessons
-                                   join Users in db.Users on UsersInLessons.UserId equals Users.Id
-                                   join Lessons in db.Lessons on UsersInLessons.LessonId equals Lessons.Id
-                               where Lessons.LessonName == lessonName
-                               select Users).ToListAsync();
-            return users;
+            return (await db.Lessons.Where(u => u.LessonName == lessonName).FirstOrDefaultAsync()).Users;
         }
 
-        public async Task<int> AddUserOnLessonById(UserInLessonModel userInLesson)
+        public async Task<int> AddUserOnLessonById(int lessonId, string userId)
         {
-            db.UsersInLessons.Add(userInLesson);
+            LessonModel lesson = db.Lessons.First(p => p.Id == lessonId);
+            lesson.Users.Add(await usersRepository.GetUserById(userId));
             return await db.SaveChangesAsync();
         }
 
         public async Task<int> DeleteUserFromLessonById(int lessonId, string userId)
         {
-            db.UsersInLessons.Remove(db.UsersInLessons.FirstOrDefault(b => b.LessonId == lessonId && b.UserId == userId));
+            UserModel user = db.Users.First(p => p.Id == userId);
+            LessonModel lesson = user.Lessons.First(p => p.Id == lessonId);
+            lesson.Users.Remove(user);
             return await db.SaveChangesAsync();
         }
 
         public async Task<int> ClearUsersInLessonsByLessonId(int lessonId)
         {
-            db.UsersInLessons.RemoveRange(db.UsersInLessons.Where(b => b.LessonId == lessonId).ToList());
+            LessonModel lesson = await db.Lessons.Include(p => p.Users).FirstAsync();
+            lesson.Users.Clear();
             return await db.SaveChangesAsync();
         }
     }

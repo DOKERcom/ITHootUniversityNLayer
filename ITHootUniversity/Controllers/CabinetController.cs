@@ -1,7 +1,6 @@
 ﻿using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Services.Implementations;
 using BusinessLogicLayer.Services.Interfaces;
-using ITHootUniversity.Services.Interfaces;
 using ITHootUniversity.ViewModels;
 using ITHootUniversity.WebAppFactories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -16,8 +15,8 @@ namespace ITHootUniversity.Controllers
         private readonly ILessonsService lessonsService;
         private readonly IUsersInLessonsService usersInLessonsService;
         private readonly IViewModelToDtoFactory viewModelToDtoFactory;
-        private readonly ICabinetViewModelService cabinetViewModelService;
-        public CabinetController(IUsersService usersService, IViewModelToDtoFactory viewModelToDtoFactory, ICabinetViewModelService cabinetViewModelService, ILessonsService lessonsService, IUsersInLessonsService usersInLessonsService)
+        private readonly ICabinetViewModelFactory cabinetViewModelService;
+        public CabinetController(IUsersService usersService, IViewModelToDtoFactory viewModelToDtoFactory, ICabinetViewModelFactory cabinetViewModelService, ILessonsService lessonsService, IUsersInLessonsService usersInLessonsService)
         {
             this.usersService = usersService;
             this.viewModelToDtoFactory = viewModelToDtoFactory;

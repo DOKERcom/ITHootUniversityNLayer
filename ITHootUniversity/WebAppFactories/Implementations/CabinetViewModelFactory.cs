@@ -1,11 +1,10 @@
 ﻿using BusinessLogicLayer.Services.Interfaces;
-using ITHootUniversity.Services.Interfaces;
 using ITHootUniversity.ViewModels;
 using ITHootUniversity.WebAppFactories.Interfaces;
 
-namespace ITHootUniversity.Services.Implementations
+namespace ITHootUniversity.WebAppFactories.Implementations
 {
-    public class CabinetViewModelService : ICabinetViewModelService
+    public class CabinetViewModelFactory : ICabinetViewModelFactory
     {
         private readonly IUsersService usersService;
 
@@ -13,9 +12,9 @@ namespace ITHootUniversity.Services.Implementations
 
         private readonly IDtoToViewModelFactory dtoToViewModelFactory;
 
-        public CabinetViewModelService(
-            IUsersService usersService, 
-            IDtoToViewModelFactory dtoToViewModelFactory, 
+        public CabinetViewModelFactory(
+            IUsersService usersService,
+            IDtoToViewModelFactory dtoToViewModelFactory,
             ILessonsService lessonsService)
         {
             this.usersService = usersService;
@@ -35,5 +34,5 @@ namespace ITHootUniversity.Services.Implementations
         }
     }
 }
-    
+
 

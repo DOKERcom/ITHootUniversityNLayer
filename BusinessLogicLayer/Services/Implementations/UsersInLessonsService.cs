@@ -2,7 +2,6 @@
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories.Interfaces;
 using ITHootUniversity.Models;
-using ITHootUniversity.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,13 +51,7 @@ namespace BusinessLogicLayer.Services.Implementations
 
         public async Task<int> AddUserOnLessonById(int lessonId, string userId)
         {
-            UserInLessonModel UserInLesson = new UserInLessonModel 
-            { 
-                LessonId = lessonId, 
-                UserId = userId 
-            };
-
-            return await usersInLessonsRepository.AddUserOnLessonById(UserInLesson);
+            return await usersInLessonsRepository.AddUserOnLessonById(lessonId, userId);
         }
 
         public async Task<int> DeleteUserFromLessonById(int lessonId, string userId)
