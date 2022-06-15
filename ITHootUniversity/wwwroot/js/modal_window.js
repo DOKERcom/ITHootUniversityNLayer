@@ -17,3 +17,13 @@ checkUserModal.onclick = function () {
 span.onclick = function () {
     _checkUserModal.style.display = "none";
 }
+
+var _createUserModal = document.getElementById("_createUserModal");
+var createUserModal = document.getElementById("createUserModal");
+var span = document.getElementById("close_createUserModal");
+createUserModal.onclick = function () {
+    _createUserModal.style.display = "block";
+}
+span.onclick = function () {
+    _createUserModal.style.display = "none";
+}

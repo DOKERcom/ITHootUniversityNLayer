@@ -21,7 +21,7 @@
                 <div class="change_blocks">
                     <div class="change_block">
                         <div class="submit_button">
-                            <input type="submit" value="Create user">
+                            <input id="createUserModal" type="submit" value="Create user">
                         </div>
                     </div>
                 </div>
@@ -56,6 +56,49 @@
     </div>
 </div>
 
+<div id="_createUserModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div id="close_createUserModal" class="close">&times;</div>
+      <h2>Creating user: </h2>
+    </div>
+    <div class="modal-body">
+      
+    <div class="user_edit_popup">
+      <div class="edit_popup_box">
+            <div class="header_name">
+                <p>Create user form</p>
+            </div>
+            <div class="change_blocks">
+                <div class="change_block">
+                    <div class="input_block">
+                        <label for="CreateUserName">User name:</label>
+                        <input id="CreateUserName" name="CreateUserName" maxlength="25" type="text">
+                    </div>
+                    <div class="input_block">
+                        <label for="CreatePassword">New password:</label>
+                        <input id="CreatePassword" name="CreatePassword" maxlength="25" type="text">
+                    </div>
+                    <div class="input_block">
+                        <label for="CreateRole">Role:</label>
+                        <select id="CreateRole" name="CreateRole">
+                            <option value="Admin">Admin</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                        </select>
+                    </div>
+                    <div class="submit_button">
+                        <input onclick="CreateOrUpdateUser(document.getElementById('CreateUserName').value, document.getElementById('CreatePassword').value, document.getElementById('CreateRole').value)" type="submit" value="Create user">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
 <div id="_editUserModal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -72,12 +115,12 @@
                 <div class="change_blocks">
                     <div class="change_block">
                         <div class="input_block">
-                            <label for="password">New password:</label>
-                            <input id="password" name="password" maxlength="25" type="text">
+                            <label for="EditPassword">New password:</label>
+                            <input id="EditPassword" name="EditPassword" maxlength="25" type="text">
                         </div>
                         <div class="input_block">
-                            <label for="password">Confirm password:</label>
-                            <input id="password" name="password" maxlength="25" type="text">
+                            <label for="EditConfPassword">Confirm password:</label>
+                            <input id="EditConfPassword" name="EditConfPassword" maxlength="25" type="text">
                         </div>
                         <div class="submit_button">
                             <input type="submit" value="Change password">
@@ -85,8 +128,8 @@
                     </div>
                     <div class="change_block">
                         <div class="input_block">
-                            <label for="role">Role:</label>
-                            <select id="Role" name="role">
+                            <label for="EditRole">Role:</label>
+                            <select id="EditRole" name="EditRole">
                                 <option value="Admin">Admin</option>
                                 <option value="Student">Student</option>
                                 <option value="Teacher">Teacher</option>
