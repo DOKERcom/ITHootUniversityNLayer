@@ -1,0 +1,98 @@
+/* Убираем внешние отступы */
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li, a {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+*, *:before, *:after {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+* {
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+a {
+    text-decoration: none;
+}
+/*=======================================================================*/
+.user_edit_popup
+{
+    width: 100%;
+    height: 100%;
+    background-color: #fab6b4;
+}
+    .edit_popup_box
+    {
+        width: 100%;
+    }
+        .header_name
+        {
+            display: flex;
+            background-color: #b83f3b;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 24px;
+            height: 5%;
+        }
+
+        .change_blocks
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            column-gap: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+            .change_block
+            {
+                
+            }
+                .input_block
+                {
+                    padding: 10px;
+                }
+                    .input_block label
+                    {
+                        display: flex;
+                        justify-content: left;
+                    }
+                    .input_block input
+                    {
+                        font-size: 14px;
+                        padding: 5px 5px 5px 10px !important;
+                    }
+                    .submit_button
+                    {
+                        display: flex;
+                        justify-content: center;
+                        width: 300px !important;
+                    }
+                    .submit_button input
+                    {
+                        
+                    }
+                    .submit_button input:hover
+                    {
+                        
+                    }

@@ -7,7 +7,14 @@
     grid-template-areas: 
     "left center right";
 }
-.maintenance_blocks{
+
+.maintenance {
+    grid-area: center;
+    padding-top: 1%;
+    width: 100%;
+}
+
+.maintenance_blocks {
     grid-area: center;
     display: flex;
     justify-content: start;

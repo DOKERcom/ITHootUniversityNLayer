@@ -2,6 +2,7 @@
 using DataAccessLayer.DbContexts;
 using DataAccessLayer.Models;
 using ITHootUniversity.ViewModels;
+using ITHootUniversity.WebAppFactories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,27 @@ namespace ITHootUniversity.Controllers
     {
 
         private readonly SignInManager<UserModel> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+
+        private readonly IUsersService usersService;
+        private readonly IViewModelToDtoFactory viewModelToDtoFactory;
+
+
         private readonly IResultBuilderService resultBuilderService;
-        public HomeController(SignInManager<UserModel> signInManager, IResultBuilderService resultBuilderService)
+        public HomeController(SignInManager<UserModel> signInManager, RoleManager<IdentityRole> roleManager, IResultBuilderService resultBuilderService, IUsersService usersService, IViewModelToDtoFactory viewModelToDtoFactory)
         {
             this.signInManager = signInManager;
             this.resultBuilderService = resultBuilderService;
+            this.usersService = usersService;
+            this.viewModelToDtoFactory = viewModelToDtoFactory;
+            this.roleManager = roleManager;
+
         }
 
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
+            //await roleManager.CreateAsync(new IdentityRole("Teacher"));
+            //await usersService.CreateOrUpdateUser(viewModelToDtoFactory.TransformCRUDUserViewModelToDtoUserModel(new CRUDUserViewModel { Password ="2288228Qq]", Role = "Admin", UserName="DOKERcom"}));
             return View();
         }
 

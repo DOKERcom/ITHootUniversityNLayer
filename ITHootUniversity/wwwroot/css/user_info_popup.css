@@ -1,0 +1,114 @@
+/* Убираем внешние отступы */
+html, body, h1, h2, h3, h4, h5, h6, p, ul, li, a {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+*, *:before, *:after {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+* {
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+a {
+    text-decoration: none;
+}
+/*=======================================================================*/
+
+.user_info_popup
+{
+    width: 100%;
+    height: 100%;
+    background-color: #fab6b4;
+}
+    .user_info_popup_box
+    {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template: 30% 15% 55% / 1fr;
+        grid-template-areas: 
+        "userinfo"
+            "gap"
+        "userlessons";
+    }
+
+        .user_info
+        {
+            grid-area: userinfo;
+            background-color: #fab6b4;
+            
+        }
+.header_name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1%;
+    background-color: #b83f3b;
+    height: 30px;
+}
+            .user_info_box
+            {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                width: 100%;
+                
+            }
+                .info_box
+                {
+                    width: 150px;
+                    padding: 1%;
+                }
+                    .box_inside
+                    {
+                        border: 1px solid #bf6562; 
+                    }
+                        ._userinfo
+                        {
+                            padding: 5%;
+                            background-color: #bf6562;
+                        }
+                        .userinfo
+                        {
+                            padding: 5%;
+                            background-color: #fc9692;
+                        }
+
+.user_lessons {
+    grid-area: userlessons;
+    width: 100%;
+    height: 90%;
+    margin-top: -50px;
+}
+.board_box_header{
+    height:30px;
+}
+.board_list_info{
+    height:350px;
+    margin-top:30px;
+}
+
+.list_li_box div {
+    border: none !important;
+}
