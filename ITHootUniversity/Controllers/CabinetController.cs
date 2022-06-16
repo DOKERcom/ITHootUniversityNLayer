@@ -31,6 +31,12 @@ namespace ITHootUniversity.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> GetJsonCabinetViewModel()
+        {
+            return new JsonResult(await cabinetViewModelService.CreateAndFillCabinetViewModel());
+        }
+
+        [HttpPost]
         public async Task<JsonResult> CreateOrUpdateUser(CRUDUserViewModel user)
         {
            return new JsonResult(await usersService.CreateOrUpdateUser(viewModelToDtoFactory.TransformCRUDUserViewModelToDtoUserModel(user)));

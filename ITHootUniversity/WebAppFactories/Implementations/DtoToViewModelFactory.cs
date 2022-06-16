@@ -18,7 +18,7 @@ namespace ITHootUniversity.WebAppFactories.Implementations
             LessonViewModel lessonViewModel = new LessonViewModel
             {
                     LessonName = lesson.LessonName,
-                    Users = await TransformDtoUserModelToUserViewModel(lesson.Users),
+                    //Users = await TransformDtoUserModelToUserViewModel(lesson.Users),
             };
 
             return lessonViewModel;

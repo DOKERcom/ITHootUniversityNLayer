@@ -88,10 +88,13 @@ namespace BusinessLogicLayer.Services.Implementations
             }
             else
             {
+                if (string.IsNullOrEmpty(user.Password) && string.IsNullOrEmpty(user.Role))
+                    return resultBuilderService.ToModelForJsonResult("", $"Any fields must be filled!");
+
                 if (!string.IsNullOrEmpty(user.Password))
                     userR.PasswordHash = userManager.PasswordHasher.HashPassword(userR, user.Password);
 
-                if (!await rolesService.IsUserInRole(userR, user.Role))
+                if (!string.IsNullOrEmpty(user.Role) && !await rolesService.IsUserInRole(userR, user.Role))
                 {
                     foreach (var role in await rolesService.GetUserRoles(userR))
                     {

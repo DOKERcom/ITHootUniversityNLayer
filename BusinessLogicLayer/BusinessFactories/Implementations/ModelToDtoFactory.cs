@@ -21,7 +21,7 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
                 dtoLessons.Add(new DtoLessonModel {
                     LessonId = lesson.Id,
                     LessonName = lesson.LessonName,
-                    Users = TransformUserModelToDtoUserModel(lesson.Users),
+                    //Users = TransformUserModelToDtoUserModel(lesson.Users),
                 });
             }
 
@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
             {
                 LessonId = lesson.Id,
                 LessonName = lesson.LessonName,
-                Users = TransformUserModelToDtoUserModel(lesson.Users),
+                //Users = TransformUserModelToDtoUserModel(lesson.Users),
             };
 
             return dtoLesson;

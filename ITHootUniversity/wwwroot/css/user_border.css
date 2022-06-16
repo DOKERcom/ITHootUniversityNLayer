@@ -73,7 +73,7 @@ a{
                 grid-area: adduser;
                 width: 200px;
                 margin-top: -15px;
-                margin-left:70px;
+                margin-left:225px;
                 z-index: 1;
             }
             .board_createuser .change_blocks .change_block .submit_button input{

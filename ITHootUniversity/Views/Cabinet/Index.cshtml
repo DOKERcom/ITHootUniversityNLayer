@@ -1,4 +1,5 @@
-﻿@model CabinetViewModel
+﻿@using System.Text
+@model CabinetViewModel
 <link rel="stylesheet" type="text/css" href="css/cabinet.css">
 
 <link rel="stylesheet" type="text/css" href="css/modal_window.css">
@@ -10,50 +11,143 @@
 <link rel="stylesheet" type="text/css" href="css/user_info_popup.css">
 
 <div class="maintenance">
-    <div class="users_board">
-        <div class="users_board_box">
-            <div class="board_box_header">
-                <div class="board_name">
-                    <p>USERS BOARD</p>
-                </div>
-            </div>
-            <div class="board_createuser">
-                <div class="change_blocks">
-                    <div class="change_block">
-                        <div class="submit_button">
-                            <input id="createUserModal" type="submit" value="Create user">
+    @{
+        if (User.IsInRole("Admin"))
+        {
+                                        <div class="users_board">
+                                            <div class="users_board_box">
+                                                <div class="board_box_header">
+                                                    <div class="board_name">
+                                                        <p>USERS BOARD</p>
+                                                    </div>
+                                                </div>
+                                                <div class="board_createuser">
+                                                    <div class="change_blocks">
+                                                        <div class="change_block">
+                                                            <div class="submit_button">
+                                                                <input id="createUserModal" type="submit" value="Create user">
+                                                            </div>
+                                                        </div>
+                                                        <div class="change_block">
+                                                            <div class="submit_button">
+                                                                <input  id="createLessonModal" type="submit" value="Create lesson">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="board_list">
+                                                    <li class="list_li_box naming">
+                                                        <div class="user_name"> <p>User Login</p> </div>
+                                                        <div class="user_role"> <p>User Role</p> </div>
+                                                        <div class="user_gap"></div>
+                                                        <div class="user_gap"></div>
+                                                    </li>
+                                                    <ul class="list_ul">
+                                                        @{
+                            foreach (var user in Model.UserViewModels)
+                            {
+                                                                                                <li class="list_li_box">
+                                                                                                    <div class="user_name"> <p>@user.UserName</p> </div>
+                                                                                                    <input id="BoardUserName" maxlength="25" type="text" name="BoardUserName" value="@user.UserName" hidden disabled>
+                                                                                                    <div class="user_role"> <p>@user.Role</p> </div>
+                                                                                                    <div class="user_gap"></div>
+                                                                                                    <div class="user_buttons">
+                                                                                                        <input onclick="EditUserModal('@user.UserName')" id="editUserModal" type="submit" value="📝">
+                                                                                                        <input onclick="CheckUserModal('@user.UserName','@user.Role')" id="checkUserModal" type="submit" value="🔎">
+                                                                                                        <input onclick="DeleteUser('@user.UserName')" id="deleteUser" type="submit" value="❌">
+                                                                                                    </div>
+                                                                                                </li>
+                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+        }
+        else
+        {
+        <div class="users_board">
+            <div class="users_board_box">
+                <div>
+                    <div>
+                        <div class="user_info_popup">
+                            <div class="user_info_popup_box">
+                                <div class="user_info">
+                                    <div class="header_name">
+                                        <p>USER INFO</p>
+                                    </div>
+                                    <div class="user_info_box">
+                                        <div class="info_box">
+                                            <div class="box_inside">
+                                                <div class="_userinfo">
+                                                    <p>User name</p>
+                                                </div>
+                                                <div id="userinfo_username_id" class="userinfo">
+                                                    <p>@User.Identity.Name</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info_box">
+                                            <div class="box_inside">
+                                                <div class="_userinfo">
+                                                    <p>User role</p>
+                                                </div>
+                                                <div id="userinfo_userrole_id" class="userinfo">
+                                                    <p>@Model.UserViewModels.Where(u=>u.UserName == User.Identity.Name).FirstOrDefault().Role</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user_lessons">
+                                    <div class="users_board">
+                                        <div class="users_board_box">
+                                            <div class="board_box_header">
+                                                <div class="boarded_name">
+                                                    <p>USER'S LESSONS BOARD</p>
+                                                </div>
+                                            </div>
+                                            <div class="board_list_info">
+                                                <li class="list_li_box naming">
+                                                    <div class="user_name"> <p>Lesson name</p> </div>
+                                                    <div class="user_gap"></div>
+                                                    <div class="user_gap"></div>
+                                                    <div class="user_reg"> <p>Join / Left lesson</p> </div>
+                                                </li>
+                                                <ul class="list_ul" id="list_ul_lessons_id">
+                                                @{
+                                                    foreach (var model in Model.LessonViewModels) 
+                                                    {
+                                                        <li class="list_li_box">
+                                                            <div class="user_name"> <p>@(model.LessonName)</p> </div>
+                                                            <div class="user_role"></div>
+                                                            <div class="user_gap"></div>
+                                                            <div class="user_buttons">
+                                                            @if(Model.UserViewModels.Where(u=>u.UserName == User.Identity.Name).FirstOrDefault().Lessons.Where(l=>l.LessonName == model.LessonName).FirstOrDefault() != null)
+                                                            {
+                                                                <input onclick="LeftFromLesson('@(model.LessonName)')" type="checkbox" checked>    
+                                                            }
+                                                            else
+                                                            {
+                                                                <input onclick="JoinToLesson('@(model.LessonName)')" type="checkbox">    
+                                                            }
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="board_list">
-                <li class="list_li_box naming">
-                    <div class="user_name"> <p>User Login</p> </div>
-                    <div class="user_role"> <p>User Role</p> </div>
-                    <div class="user_gap"></div>
-                    <div class="user_gap"></div>
-                </li>
-                <ul class="list_ul">
-                    @{
-                        foreach (var user in Model.UserViewModels) 
-                        {
-                                <li class="list_li_box">
-                                    <div class="user_name"> <p>@user.UserName</p> </div>
-                                    <input id="BoardUserName" maxlength="25" type="text" name="BoardUserName" value="@user.UserName" hidden disabled>
-                                    <div class="user_role"> <p>@user.Role</p> </div>
-                                    <div class="user_gap"></div>
-                                    <div class="user_buttons">
-                                        <input onclick="EditUserModal('@user.UserName')" id="editUserModal" type="submit" value="📝">
-                                        <input onclick="CheckUserModal('@user.UserName')" id="checkUserModal" type="submit" value="🔎">
-                                        <input onclick="DeleteUser('@user.UserName')" id="deleteUser" type="submit" value="❌">
-                                    </div>
-                            </li>
-                        }
-                    }
-                </ul>
-            </div>
         </div>
-    </div>
+        }
+    }
 </div>
 
 <div id="_createUserModal" class="modal">
@@ -85,7 +179,7 @@
                                     @{
                                         foreach (var role in @Model.Roles) 
                                         {
-                                            <option value="@role">@role</option>
+                                                                                    <option value="@role">@role</option>
                                         }
                                     }
                         </select>
@@ -112,8 +206,8 @@
       
         <div class="user_edit_popup">
             <div class="edit_popup_box">
-                <div class="header_name">
-                    <p>DOKERcom</p>
+                <div id="edit_header_name_id" class="header_name">
+                <!--UserName-->
                 </div>
                 <div class="change_blocks">
                     <div class="change_block">
@@ -125,8 +219,8 @@
                             <label for="EditConfPassword">Confirm password:</label>
                             <input id="EditConfPassword" name="EditConfPassword" maxlength="25" type="text">
                         </div>
-                        <div class="submit_button">
-                            <input type="submit" value="Change password">
+                        <div id="edit_changepassword_id" class="submit_button">
+                            <!--inputChangePassword-->
                         </div>
                     </div>
                     <div class="change_block">
@@ -136,13 +230,91 @@
                                     @{
                                         foreach (var role in @Model.Roles) 
                                         {
-                                            <option value="@role">@role</option>
+                                                                            <option value="@role">@role</option>
                                         }
                                     }
-                            </select>
+                                </select>
+                            </div>
+                            <div id="edit_changerole_id" class="submit_button">
+                                <!--inputChangeRole-->
+                            </div>
                         </div>
-                        <div class="submit_button">
-                            <input type="submit" value="Change role">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="_checkUserModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div id="close_checkUserModal" class="close">&times;</div>
+            <h2>User Info: </h2>
+        </div>
+        <div class="modal-body">
+
+            <div class="user_info_popup">
+                <div class="user_info_popup_box">
+                    <div class="user_info">
+                        <div class="header_name">
+                            <p>USER INFO</p>
+                        </div>
+                        <div class="user_info_box">
+                            <div class="info_box">
+                                <div class="box_inside">
+                                    <div class="_userinfo">
+                                        <p>User name</p>
+                                    </div>
+                                    <div id="userinfo_username_id" class="userinfo">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info_box">
+                                <div class="box_inside">
+                                    <div class="_userinfo">
+                                        <p>User role</p>
+                                    </div>
+                                    <div id="userinfo_userrole_id" class="userinfo">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user_lessons">
+                        <div class="users_board">
+                            <div class="users_board_box">
+                                <div class="board_box_header">
+                                    <div class="boarded_name">
+                                        <p>USER'S LESSONS BOARD</p>
+                                    </div>
+                                </div>
+                                <div class="board_list_info">
+                                    <li class="list_li_box naming">
+                                        <div class="user_name"> <p>Lesson name</p> </div>
+                                        <div class="user_gap"></div>
+                                        <div class="user_gap"></div>
+                                        <div class="user_reg"> <p>Join / Left lesson</p> </div>
+                                    </li>
+                                    <ul class="list_ul" id="list_ul_lessons_id">
+                                        @{
+                                            foreach (var model in Model.LessonViewModels) 
+                                            {
+                                                                                <li class="list_li_box">
+                                                                                    <div class="user_name"> <p>@(model.LessonName)</p> </div>
+                                                                                    <div class="user_role"></div>
+                                                                                    <div class="user_gap"></div>
+                                                                                    <div class="user_buttons" id="user_buttons_@(model.LessonName)_id">
+                                                                                        <input onclick="DeleteLesson('@(model.LessonName)')" id="id_@(model.LessonName)_deletelesson" type="submit" value="❌">
+                                                                                    </div>
+                                                                                </li>
+                                            }
+                                        }
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,74 +325,46 @@
   </div>
 </div>
 
-<div id="_checkUserModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <div id="close_checkUserModal" class="close">&times;</div>
-      <h2>User Info: </h2>
-    </div>
-    <div class="modal-body">
+<div id="_createLessonModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div id="close_createLessonModal" class="close">&times;</div>
+            <h2>Creating lesson: </h2>
+        </div>
+        <div class="modal-body">
 
-        <div class="user_info_popup">
-            <div class="user_info_popup_box">
-                <div class="user_info">
+            <div class="user_edit_popup">
+                <div class="edit_popup_box">
                     <div class="header_name">
-                        <p>USER INFO</p>
+                        <p>Create lesson form</p>
                     </div>
-                    <div class="user_info_box">
-                        <div class="info_box">
-                            <div class="box_inside">
-                                <div class="_userinfo">
-                                    <p>User name</p>
-                                </div>
-                                <div class="userinfo">
-                                    <p>DOKERcom</p>
-                                </div>
+                    <div class="change_blocks">
+                        <div class="change_block">
+                            <div class="input_block">
+                                <label for="CreateLessonName">Lesson name:</label>
+                                <input id="CreateLessonName" name="CreateLessonName" maxlength="25" type="text">
                             </div>
-                        </div>
-                        <div class="info_box">
-                            <div class="box_inside">
-                                <div class="_userinfo">
-                                    <p>User role</p>
-                                </div>
-                                <div class="userinfo">
-                                    <p>Admin</p>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="input_block">
+                                <label for="CreateTeacher">Teacher:</label>
+                                <select id="CreateTeacher" name="CreateTeacher">
+                                    @{
+                                        foreach (var teacher in @Model.UserViewModels) 
+                                        {
+                                            if (teacher.Role == "Teacher") 
+                                            {
+                                                                                <option value="@teacher.UserName">@teacher.UserName</option>
+                                            }
+                                        }
+                                    }
+                        </select>
                     </div>
-                </div>
-                <div class="user_lessons">
-                    <div class="users_board">
-                        <div class="users_board_box">
-                            <div class="board_box_header">
-                                <div class="boarded_name">
-                                    <p>USER'S LESSONS BOARD</p>
-                                </div>
-                            </div>
-                            <div class="board_list_info">
-                                <li class="list_li_box naming">
-                                    <div class="user_name"> <p>Lesson name</p> </div>
-                                    <div class="user_gap"></div>
-                                    <div class="user_gap"></div>
-                                    <div class="user_reg"> <p>Join / Left lesson</p> </div>
-                                </li>
-                                <ul class="list_ul">
-                                    <li class="list_li_box">
-                                        <div class="user_name"> <p>Physics</p> </div>
-                                        <div class="user_role"></div>
-                                        <div class="user_gap"></div>
-                                        <div class="user_buttons">
-                                            <input type="checkbox">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="submit_button">
+                        <input onclick="CreateLesson(document.getElementById('CreateLessonName').value, document.getElementById('CreateTeacher').value)" type="submit" value="Create lesson">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
   </div>
