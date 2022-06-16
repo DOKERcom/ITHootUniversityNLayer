@@ -20,7 +20,8 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
             {
                 dtoLessons.Add(new DtoLessonModel {
                     LessonId = lesson.Id,
-                    LessonName = lesson.LessonName
+                    LessonName = lesson.LessonName,
+                    Users = TransformUserModelToDtoUserModel(lesson.Users),
                 });
             }
 
@@ -31,10 +32,12 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
         {
             if (lesson == null)
                 return null;
+
             DtoLessonModel dtoLesson = new DtoLessonModel
             {
                 LessonId = lesson.Id,
-                LessonName = lesson.LessonName
+                LessonName = lesson.LessonName,
+                Users = TransformUserModelToDtoUserModel(lesson.Users),
             };
 
             return dtoLesson;
@@ -49,7 +52,8 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
 
             DtoUserModel dtoUser = new DtoUserModel
             {
-                UserName = user.UserName
+                UserName = user.UserName,
+                Lessons = TransformLessonModelToDtoLessonModel(user.Lessons),
             };
 
             return dtoUser;
@@ -61,7 +65,11 @@ namespace BusinessLogicLayer.BusinessFactories.Implementations
 
             foreach (UserModel user in users)
             {
-                dtoUsers.Add(new DtoUserModel { UserName = user.UserName });
+                dtoUsers.Add(new DtoUserModel 
+                {
+                    UserName = user.UserName,
+                    Lessons = TransformLessonModelToDtoLessonModel(user.Lessons),
+                });
             }
 
             return dtoUsers;

@@ -22,6 +22,11 @@ namespace BusinessLogicLayer.Services.Implementations
             this.usersRepository = usersRepository;
         }
 
+        public IList<string> GetAllRoles()
+        {
+            return rolesRepository.GetAllRoles();
+        }
+
         public async Task<IList<string>> GetUserRoles(UserModel user)
         {
             return await rolesRepository.GetUserRoles(user);

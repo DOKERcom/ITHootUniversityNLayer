@@ -13,11 +13,12 @@ namespace ITHootUniversity.WebAppFactories.Implementations
             this.rolesService = rolesService;
         }
 
-        public LessonViewModel TransformDtoLessonModelToLessonViewModel(DtoLessonModel lesson)
+        public async Task<LessonViewModel> TransformDtoLessonModelToLessonViewModel(DtoLessonModel lesson)
         {
             LessonViewModel lessonViewModel = new LessonViewModel
             {
                     LessonName = lesson.LessonName,
+                    Users = await TransformDtoUserModelToUserViewModel(lesson.Users),
             };
 
             return lessonViewModel;
@@ -35,11 +36,13 @@ namespace ITHootUniversity.WebAppFactories.Implementations
             return lessonViewModels;
         }
 
-        public UserViewModel TransformDtoUserModelToUserViewModel(DtoUserModel user)
+        public async Task<UserViewModel> TransformDtoUserModelToUserViewModel(DtoUserModel user)
         {
             UserViewModel userViewModel = new UserViewModel
             {
                 UserName = user.UserName,
+                Role = (await rolesService.GetUserRoles(user.UserName)).FirstOrDefault(),
+                Lessons = TransformDtoLessonModelToLessonViewModel(user.Lessons),
             };
 
             return userViewModel;
@@ -50,9 +53,13 @@ namespace ITHootUniversity.WebAppFactories.Implementations
             List<UserViewModel> userViewModels = new List<UserViewModel>();
             foreach (DtoUserModel user in users)
             {
-                userViewModels.Add(new UserViewModel { 
-                    UserName = user.UserName, 
-                    Role = (await rolesService.GetUserRoles(user.UserName)).FirstOrDefault() });
+                userViewModels.Add(new UserViewModel
+                {
+                    UserName = user.UserName,
+                    Role = (await rolesService.GetUserRoles(user.UserName)).FirstOrDefault(),
+                    Lessons = TransformDtoLessonModelToLessonViewModel(user.Lessons),
+                });
+
             }
 
             return userViewModels;

@@ -25,7 +25,7 @@ namespace DataAccessLayer.Repositories.Implementations
 
         public async Task<List<UserModel>> GetAllUsers()
         {
-            return await userManager.Users.ToListAsync();
+            return await userManager.Users.Include(u=>u.Lessons).ToListAsync();
         }
 
         public async Task<IdentityResult> UpdateUser(UserModel user)

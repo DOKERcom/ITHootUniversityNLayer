@@ -10,6 +10,8 @@ namespace BusinessLogicLayer.Services.Interfaces
 {
     public interface IRolesService
     {
+        public IList<string> GetAllRoles();
+
         public Task<IList<string>> GetUserRoles(UserModel user);
 
         public Task<IList<string>> GetUserRoles(string userName);

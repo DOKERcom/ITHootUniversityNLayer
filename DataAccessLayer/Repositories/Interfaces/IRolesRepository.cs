@@ -10,6 +10,8 @@ namespace DataAccessLayer.Repositories.Interfaces
 {
     public interface IRolesRepository
     {
+        public IList<string> GetAllRoles();
+
         public Task<IList<string>> GetUserRoles(UserModel user);
 
         public Task<IdentityResult> AddUserToRole(UserModel user, string role);

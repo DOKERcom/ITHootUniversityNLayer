@@ -12,9 +12,16 @@ namespace DataAccessLayer.Repositories.Implementations
     public class RolesRepository : IRolesRepository
     {
         private readonly UserManager<UserModel> userManager;
-        public RolesRepository(UserManager<UserModel> userManager)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public RolesRepository(UserManager<UserModel> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
+        }
+
+        public IList<string> GetAllRoles()
+        {
+            return roleManager.Roles.Select(r => r.Name).ToList();
         }
 
         public async Task<IList<string>> GetUserRoles(UserModel user)
