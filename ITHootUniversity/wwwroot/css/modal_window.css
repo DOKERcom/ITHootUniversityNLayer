@@ -54,6 +54,7 @@
   }
 
 .modal-header {
+    display: block;
     padding: 2px 16px;
     background-color: #b83f3b;
     color: white;
@@ -66,3 +67,15 @@
     background-color: #5cb85c;
     color: white;
   }
+
+.edit_popup_box_center {
+    padding: 0 25%;
+}
+
+.button_center {
+    margin: 0 auto;
+    width: 300px !important;
+}
+.button_center input {
+    margin: 0 auto;
+}

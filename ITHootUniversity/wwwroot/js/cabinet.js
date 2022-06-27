@@ -1,23 +1,60 @@
-﻿function CreateOrUpdateUser(login, password, role) {
-    if (confirm("Do you really want to create/update a user?") == true) {
-        if (login.length > 0) {
-            const request = new XMLHttpRequest();
-            const url = "/Cabinet/CreateOrUpdateUser";
-            const params = "UserName=" + login + "&Password=" + password + "&Role=" + role;
-            request.open("POST", url, true);
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.addEventListener("readystatechange", () => {
-                if (request.readyState === 4 && request.status === 200) {
-                    var json = JSON.parse(request.responseText);
-                    alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
+﻿(function () {
+    'use strict'
+
+    var forms = document.querySelectorAll('.needs-validation')
+
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (form.checkValidity())
+                {
+
+                    if (form.getAttribute("id") == "createUserForm")
+                    {
+
+                        CreateOrUpdateUser();
+
+                    }
+                    else (form.getAttribute("id") == "createLessonForm")
+                    {
+
+                        CreateLesson();
+
+                    }
                 }
-            });
-            request.send(params);
-        } else {
-            alert("Login must be filled!");
+
+                form.classList.add('was-validated');
+
+
+            }, false)
+        })
+})()
+
+function CreateOrUpdateUser() {
+
+    var userName = document.getElementById('validationCustomUsername').value;
+    var password = document.getElementById('validationCustomPassword').value;
+    var userRole = document.getElementById('validationCustomRole').value;
+
+    const request = new XMLHttpRequest();
+    const url = "/Cabinet/CreateOrUpdateUser";
+    const params = "UserName=" + userName + "&Password=" + password + "&Role=" + userRole;
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.addEventListener("readystatechange", () => {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            alert(json.resultMessage);
+            window.location.href = "/Cabinet";
         }
-    }
+    });
+
+    request.send(params);
+
 }
 
 function DeleteUser(login) {
@@ -38,24 +75,25 @@ function DeleteUser(login) {
     }
 }
 
-function CreateLesson(lessonName, login) {
-    if (lessonName.length > 0 && login.length > 0) {
-        const request = new XMLHttpRequest();
-        const url = "/Cabinet/CreateLesson";
-        const params = "lessonName=" + lessonName + "&userName=" + login;
-        request.open("POST", url, true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.addEventListener("readystatechange", () => {
-            if (request.readyState === 4 && request.status === 200) {
-                var json = JSON.parse(request.responseText);
-                alert(json.resultMessage);
-                window.location.href = "/Cabinet";
-            }
-        });
-        request.send(params);
-    } else {
-        alert("LessonName and Login must be filled!");
-    }
+function CreateLesson() {
+
+    var lessonName = document.getElementById('validationCustomLessonname').value;
+    var userName = document.getElementById('validationCustomTeacher').value;
+
+    const request = new XMLHttpRequest();
+    const url = "/Cabinet/CreateLesson";
+    const params = "lessonName=" + lessonName + "&userName=" + userName;
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.addEventListener("readystatechange", () => {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            alert(json.resultMessage);
+            window.location.href = "/Cabinet";
+        }
+    });
+    request.send(params);
+
 }
 
 function DeleteLesson(lessonName) {

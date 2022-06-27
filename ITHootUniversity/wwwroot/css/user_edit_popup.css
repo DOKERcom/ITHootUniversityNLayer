@@ -86,7 +86,7 @@ a {
                     {
                         display: flex;
                         justify-content: center;
-                        width: 300px !important;
+                        width: 300px;
                     }
                     .submit_button input
                     {
