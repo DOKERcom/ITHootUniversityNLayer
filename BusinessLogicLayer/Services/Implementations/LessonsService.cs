@@ -75,31 +75,31 @@ namespace BusinessLogicLayer.Services.Implementations
         public async Task<ModelForJsonResult> CreateLesson(string lessonName, string userName)
         {
             if (await GetLessonByLessonName(lessonName) != null)
-                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) already created!");
+                return resultBuilderService.ToModelForJsonResult("400", $"Lesson ({lessonName}) already created!");
 
             if (await usersService.GetUserByLogin(userName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) not found!");
 
             if (!await rolesService.IsUserInRole(await usersService.GetUserByLogin(userName), "Teacher"))
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) is not a teacher!");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) is not a teacher!");
 
             await CreateLesson(new LessonModel { LessonName = lessonName });
 
             await usersInLessonsRepository.AddUserOnLessonById((await GetLessonByLessonName(lessonName)).Id, (await usersService.GetUserByLogin(userName)).Id);
 
-            return resultBuilderService.ToModelForJsonResult("", $"You have successfully created a lesson ({lessonName}) and added a teacher ({userName})!");
+            return resultBuilderService.ToModelForJsonResult("200", $"You have successfully created a lesson ({lessonName}) and added a teacher ({userName})!");
         }
 
         public async Task<ModelForJsonResult> DeleteLesson(string lessonName)
         {
             if (await GetDtoLessonByLessonName(lessonName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"Lesson ({lessonName}) not found!");
 
             await ClearUsersInLessonsByLessonId((await GetDtoLessonByLessonName(lessonName)).LessonId);
 
             await lessonsRepository.DeleteLesson(await GetLessonByLessonName(lessonName));
 
-            return resultBuilderService.ToModelForJsonResult("", $"You have successfully deleted a lesson ({lessonName})!");
+            return resultBuilderService.ToModelForJsonResult("200", $"You have successfully deleted a lesson ({lessonName})!");
         }
     }
 }

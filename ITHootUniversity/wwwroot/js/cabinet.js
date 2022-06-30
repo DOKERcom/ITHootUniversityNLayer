@@ -1,4 +1,29 @@
 ﻿
+function ResultActionToast(json)
+{
+    if (json.resultAction == "200") {
+        window.location.href = "/Cabinet";
+    }
+    else if (json.resultAction == "400") {
+        new Toast({
+            title: 'Warning',
+            text: json.resultMessage,
+            theme: 'warning',
+            autohide: true,
+            interval: 3000
+        });
+    }
+    else if (json.resultAction == "500") {
+        new Toast({
+            title: 'Error',
+            text: json.resultMessage,
+            theme: 'danger',
+            autohide: true,
+            interval: 3000
+        });
+    }
+}
+
 function UpdateUser(userName, password, userRole) {
     ReplaceElement("modal_body_text_id", "p", "modal_body_text_p_id", null, null, "Do you really want to update user?", null, null);
     modalConfirm(function (confirm) {
@@ -9,9 +34,11 @@ function UpdateUser(userName, password, userRole) {
             request.open("POST", url, true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.addEventListener("readystatechange", () => {
-                if (request.readyState === 4 && request.status === 200) {
+                if (request.readyState === 4 && request.status === 200)
+                {
                     var json = JSON.parse(request.responseText);
-                    window.location.href = "/Cabinet";
+                    ResultActionToast(json);
+                    
                 }
             });
 
@@ -32,9 +59,9 @@ function CreateUser() {
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.addEventListener("readystatechange", () => {
                 if (request.readyState === 4 && request.status === 200) {
-                    var json = JSON.parse(request.responseText);
-                    window.location.href = "/Cabinet";
+                    ResultActionToast(JSON.parse(request.responseText));
                 }
+
             });
 
             request.send(params);
@@ -53,10 +80,10 @@ function DeleteUser(login) {
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.addEventListener("readystatechange", () => {
                 if (request.readyState === 4 && request.status === 200) {
-                    //var json = JSON.parse(request.responseText);
-                    //alert(json.resultMessage);
-                    window.location.href = "/Cabinet";
+
+                    ResultActionToast(JSON.parse(request.responseText));
                 }
+
             });
             request.send(params);
 
@@ -76,9 +103,8 @@ function CreateLesson() {
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     request.addEventListener("readystatechange", () => {
         if (request.readyState === 4 && request.status === 200) {
-            //var json = JSON.parse(request.responseText);
-            //alert(json.resultMessage);
-            window.location.href = "/Cabinet";
+
+            ResultActionToast(JSON.parse(request.responseText));
         }
     });
     request.send(params);
@@ -97,9 +123,8 @@ function DeleteLesson(lessonName) {
                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 request.addEventListener("readystatechange", () => {
                     if (request.readyState === 4 && request.status === 200) {
-                        //var json = JSON.parse(request.responseText);
-                        //alert(json.resultMessage);
-                        window.location.href = "/Cabinet";
+
+                        ResultActionToast(JSON.parse(request.responseText));
                     }
                 });
                 request.send(params);
@@ -121,13 +146,30 @@ function AddUserToLesson(lessonName, userName, role) {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 var json = JSON.parse(request.responseText);
-                new Toast({
-                    title: 'Successfull',
-                    text: json.resultMessage,
-                    theme: 'success',
-                    autohide: true,
-                    interval: 3000
-                });
+                if (json.resultAction == "200")
+                    new Toast({
+                        title: 'Successfull',
+                        text: json.resultMessage,
+                        theme: 'success',
+                        autohide: true,
+                        interval: 3000
+                    });
+                if (json.resultAction == "400")
+                    new Toast({
+                        title: 'Warning',
+                        text: json.resultMessage,
+                        theme: 'warning',
+                        autohide: true,
+                        interval: 3000
+                    });
+                if (json.resultAction == "500")
+                    new Toast({
+                        title: 'Error',
+                        text: json.resultMessage,
+                        theme: 'danger',
+                        autohide: true,
+                        interval: 3000
+                    });
                 GetCheckUserUpd(userName, role);
             }
         });
@@ -159,6 +201,25 @@ function DelUserFromLesson(lessonName, userName, role) {
                             interval: 3000
                         });
                         GetCheckUserUpd(userName, role);
+                    }
+                    else {
+                        var json = JSON.parse(request.responseText);
+                        if (json.resultAction == "400")
+                            new Toast({
+                                title: 'Warning',
+                                text: json.resultMessage,
+                                theme: 'warning',
+                                autohide: true,
+                                interval: 3000
+                            });
+                        if (json.resultAction == "500")
+                            new Toast({
+                                title: 'Error',
+                                text: json.resultMessage,
+                                theme: 'danger',
+                                autohide: true,
+                                interval: 3000
+                            });
                     }
                 });
                 request.send(params);

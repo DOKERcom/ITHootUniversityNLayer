@@ -67,13 +67,13 @@ namespace BusinessLogicLayer.Services.Implementations
         public async Task<ModelForJsonResult> AddUserToLesson(string lessonName, string userName)
         {
             if (await usersService.GetUserByLogin(userName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) not found!");
 
             if (await lessonsService.GetLessonByLessonName(lessonName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"Lesson ({lessonName}) not found!");
 
             if (await IsUserOnLesson(lessonName, userName))
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) already joined to the lesson ({lessonName})");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) already joined to the lesson ({lessonName})");
 
 
             if (await rolesService.IsUserInRole(await usersService.GetUserByLogin(userName), "Teacher"))
@@ -81,30 +81,30 @@ namespace BusinessLogicLayer.Services.Implementations
                 if (await CountTeachersOnLesson(lessonName) < 2)
                 {
                     await AddUserOnLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
-                        return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) added to the lesson ({lessonName})");
+                        return resultBuilderService.ToModelForJsonResult("200", $"User ({userName}) added to the lesson ({lessonName})");
                 }
                 else
                 {
-                    return resultBuilderService.ToModelForJsonResult("", $"There are a lot of Teacher on lesson ({lessonName})");
+                    return resultBuilderService.ToModelForJsonResult("400", $"There are a lot of Teacher on lesson ({lessonName})");
                 }
             }
             else
             {
                 await AddUserOnLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
-                    return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) added to the lesson ({lessonName})");
+                    return resultBuilderService.ToModelForJsonResult("200", $"User ({userName}) added to the lesson ({lessonName})");
             }
         }
 
         public async Task<ModelForJsonResult> DelUserFromLesson(string lessonName, string userName)
         {
             if (await usersService.GetUserByLogin(userName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) not found!");
 
             if (await lessonsService.GetLessonByLessonName(lessonName) == null)
-                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"Lesson ({lessonName}) not found!");
 
             if (!await IsUserOnLesson(lessonName, userName))
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) didn't find on lesson ({lessonName})");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) didn't find on lesson ({lessonName})");
 
             await DeleteUserFromLessonById((await lessonsService.GetDtoLessonByLessonName(lessonName)).LessonId, (await usersService.GetUserByLogin(userName)).Id);
 
@@ -117,28 +117,28 @@ namespace BusinessLogicLayer.Services.Implementations
                 }
             }
 
-            return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) was remove from the lesson ({lessonName})");
+            return resultBuilderService.ToModelForJsonResult("200", $"User ({userName}) was remove from the lesson ({lessonName})");
         }
 
         public async Task<ModelForJsonResult> JoinToLesson(string lessonName, string userName)
         {
             var user = await usersService.GetUserByLogin(userName);
             if (user == null)
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found! (Try reload page)");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) not found! (Try reload page)");
 
             var lesson = await lessonsService.GetLessonByLessonName(lessonName);
             if (lesson == null)
-                return resultBuilderService.ToModelForJsonResult("", $"Lesson ({lessonName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"Lesson ({lessonName}) not found!");
 
             if (await IsUserOnLesson(lessonName, userName))
-                return resultBuilderService.ToModelForJsonResult("", $"You ({userName}) already joined to the lesson ({lessonName})");
+                return resultBuilderService.ToModelForJsonResult("400", $"You ({userName}) already joined to the lesson ({lessonName})");
 
             if (await rolesService.IsUserInRole((await usersService.GetUserByLogin(userName)), "Teacher"))
             {
                 if (await CountTeachersOnLesson(lessonName) < 2)
                 {
                     await AddUserOnLessonById(lesson.Id, user.Id);
-                    return resultBuilderService.ToModelForJsonResult("", $"You ({userName}) added to the lesson ({lessonName})");
+                    return resultBuilderService.ToModelForJsonResult("200", $"You ({userName}) added to the lesson ({lessonName})");
                 }
                 else
                 {

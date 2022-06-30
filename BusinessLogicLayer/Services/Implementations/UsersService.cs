@@ -78,18 +78,18 @@ namespace BusinessLogicLayer.Services.Implementations
             if (userR == null)
             {
                 if (string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(user.Role))
-                    return resultBuilderService.ToModelForJsonResult("", $"All fields must be filled!");
+                    return resultBuilderService.ToModelForJsonResult("400", $"All fields must be filled!");
 
                 if ((await CreateUser(dtoToModelFactory.TransformDtoUserModelToUserModel(user), user.Password)).Succeeded)
                 {
                     await rolesService.AddUserToRole(await GetUserByLogin(user.UserName), user.Role);
-                    return resultBuilderService.ToModelForJsonResult("", $"You have successfully created a user ({user.UserName})!");
+                    return resultBuilderService.ToModelForJsonResult("200", $"You have successfully created a user ({user.UserName})!");
                 }
             }
             else
             {
                 if (string.IsNullOrEmpty(user.Password) && string.IsNullOrEmpty(user.Role))
-                    return resultBuilderService.ToModelForJsonResult("", $"Any fields must be filled!");
+                    return resultBuilderService.ToModelForJsonResult("400", $"Any fields must be filled!");
 
                 if (!string.IsNullOrEmpty(user.Password))
                     userR.PasswordHash = userManager.PasswordHasher.HashPassword(userR, user.Password);
@@ -105,9 +105,9 @@ namespace BusinessLogicLayer.Services.Implementations
 
                 if ((await UpdateUser(userR)).Succeeded)
 
-                    return resultBuilderService.ToModelForJsonResult("", $"You have successfully updated a user ({user.UserName})!");
+                    return resultBuilderService.ToModelForJsonResult("200", $"You have successfully updated a user ({user.UserName})!");
             }
-            return resultBuilderService.ToModelForJsonResult("", "An unexpected error occurred");
+            return resultBuilderService.ToModelForJsonResult("500", "An unexpected error occurred");
         }
 
         public async Task<ModelForJsonResult> DeleteUser(string userName)
@@ -115,11 +115,11 @@ namespace BusinessLogicLayer.Services.Implementations
             if ((await GetUserByLogin(userName)) != null)
             {
                 await DeleteUser(await GetUserByLogin(userName));
-                return resultBuilderService.ToModelForJsonResult("", $"You have successfully deleted a user ({userName})!");
+                return resultBuilderService.ToModelForJsonResult("200", $"You have successfully deleted a user ({userName})!");
             }
             else
             {
-                return resultBuilderService.ToModelForJsonResult("", $"User ({userName}) not found!");
+                return resultBuilderService.ToModelForJsonResult("400", $"User ({userName}) not found!");
             }
         }
     }
